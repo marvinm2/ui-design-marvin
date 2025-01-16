@@ -1,0 +1,53 @@
+/* 
+VHP4Safety brand colors: 
+#29235C: Dark blue
+#307BBF: Light blue
+#E6007E: Purple 
+*/
+
+/* Setting up the background color */
+body {
+	background-color: #307BBF;
+}
+
+/* Setting up the VHP4Safety logo at the top */
+.container-fluid {
+    text-align: center;
+}
+
+.container-fluid img {
+    width: 50%;  
+    height: auto;
+}
+
+/* Setting up the navigation bar */
+.navbar {
+    background-color: #29235C !important;  /* Without the !important it does not adjust the color */
+}
+
+/* Adjusting the items in the navigation bar to the center horizontally */
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    width: 100%; 
+}
+
+/* Changing the font color in the navigation bar to white */
+.navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #E6007E !important;  /* Change color of the button to purple --just for learning myself. This may not be needed or adjusted */
+}
+
+/* Setting up the Bree font type, although not sure if this works. I don't notice a change after applying this */
+body {
+    font-family: 'Bree Serif', sans-serif;
+}
+
+/*
+.center-text {
+    text-align: center;
+}
+*/
