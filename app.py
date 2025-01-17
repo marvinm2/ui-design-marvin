@@ -75,6 +75,26 @@ def qsprpred():
     return render_template('services/qsprpred.html')
 ################################################################################
 
+################################################################################
+### Pages under 'Case Studies' 
+
+@app.route('/templates/case_studies/kidney/kidney')
+def kidney_main():
+    return render_template('case_studies/kidney/kidney.html')
+
+@app.route('/templates/case_studies/parkinson/parkinson')
+def parkinson_main():
+    return render_template('case_studies/parkinson/parkinson.html')
+
+@app.route('/templates/case_studies/thyroid/thyroid')
+def thyroid_main():
+    return render_template('case_studies/thyroid/thyroid.html')
+
+@app.route('/templates/case_studies/thyroid/workflows/thyroid_hackathon_demo_workflow')
+def thyroid_workflow_1():
+    return render_template('case_studies/thyroid/workflows/thyroid_hackathon_demo_workflow.html')
+################################################################################
+
 
 if __name__ == '__main__':
     app.run(debug=True)

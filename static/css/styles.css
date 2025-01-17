@@ -41,10 +41,49 @@ body {
     color: #E6007E !important;  /* Change color of the button to purple --just for learning myself. This may not be needed or adjusted */
 }
 
+/* Stylization for the multi-level dropdown button */
+/*
+.dropdown-menu li {
+position: relative;
+}
+.dropdown-menu .dropdown-submenu {
+display: none;
+position: absolute;
+left: 100%;
+top: -7px;
+}
+.dropdown-menu .dropdown-submenu-left {
+right: 100%;
+left: auto;
+}
+.dropdown-menu > li:hover > .dropdown-submenu {
+display: block;
+}
+/* Make the nested dropdown menu appear on hover */
+/* Make the nested dropdown menu appear on hover */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  display: none; /* Initially hidden */
+  position: absolute;
+  top: 0;
+  left: 100%; /* Position it to the right of the "Kidney" button */
+  margin-top: -1px; /* Align with the parent item */
+}
+
+.dropdown-submenu:hover .dropdown-menu {
+  display: block; /* Show the nested dropdown when hovering over the parent */
+}
+*/
+
 /* Setting up the Bree font type, although not sure if this works. I don't notice a change after applying this */
 body {
     font-family: 'Bree Serif', sans-serif;
 }
+
+
 
 /*
 .center-text {
