@@ -12,25 +12,30 @@ def home():
 
 ################################################################################
 ### Pages under 'Project Information'
-@app.route('/templates/information/mission_and_vision')
+@app.route('/information/mission_and_vision')
 def mission_and_vision():
     return render_template('information/mission_and_vision.html')
 
-@app.route('/templates/information/research_lines')
+@app.route('/information/research_lines')
 def research_lines():
     return render_template('information/research_lines.html')
 
-@app.route('/templates/information/case_studies_and_regulatory_questions')
+@app.route('/case_studies_and_regulatory_questions')
 def case_studies_and_regulatory_questions():
     return render_template('information/case_studies_and_regulatory_questions.html')
 
-@app.route('/templates/information/partners_and_consortium')
+@app.route('/information/partners_and_consortium')
 def partners_and_consortium():
     return render_template('information/partners_and_consortium.html')
 
-@app.route('/templates/information/contact')
+@app.route('/information/contact')
 def contact():
     return render_template('information/contact.html')
+
+@app.route('/youp')
+def youp():
+    return render_template('case_studies/thyroid/youp.html')
+
 ################################################################################
 
 ################################################################################
