@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VHP4Safety</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VHP4Safety</title>
 
-    <!-- Adding the Bree font type, although not sure if this works -->
-    <link href='https://fonts.googleapis.com/css?family=Bree' rel='stylesheet'>
+  <!-- Adding the Bree font type, although not sure if this works -->
+  <link href='https://fonts.googleapis.com/css?family=Bree' rel='stylesheet'>
 
-    <!-- Adding a favicon -->
-    <link rel="icon" href="{{ url_for('static', filename='images/vhp_favicon.ico') }}" type="image/x-icon">
+  <!-- Adding a favicon -->
+  <link rel="icon" href="{{ url_for('static', filename='images/vhp_favicon.ico') }}" type="image/x-icon">
 
-    <!-- Link to Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Link to custom styles -->
-    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+  <!-- Link to Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Link to custom styles -->
+  <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
 </head>
 <body>
 
 <!-- Adding the VHP4Safety logo before the navigation bar -->
 <div class="container-fluid">
-    <img src="{{ url_for('static', filename='images/vhp4safety_logo.png') }}" class="img-fluid" alt="VHP4Safety Logo">
+  <img src="{{ url_for('static', filename='images/vhp4safety_logo.png') }}" class="img-fluid" alt="VHP4Safety Logo">
 </div>
 
 <!-- Navigation Bar -->
@@ -30,9 +31,11 @@
   <!-- Or, we can add an image here with the following line -->
   <!--- <a class="navbar-brand" href="#">
   <img src="{{ url_for('static', filename='images/vhp4safety_logo.png') }}" alt="Logo" style="height: 40px;"> </a> -->
+  
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
@@ -41,9 +44,7 @@
 
       <!-- Dropdown button for Project Information -->
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Project Information
-        </a>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Project Information</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{ url_for('mission_and_vision') }}">Our Mission and Vision</a>
           <a class="dropdown-item" href="{{ url_for('research_lines') }}">Research Lines</a>
@@ -56,9 +57,7 @@
 
       <!-- Dropdown button for Services -->
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Services
-        </a>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Services</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{ url_for('service_list') }}">List of all services</a>
           <div class="dropdown-divider"></div>
@@ -66,16 +65,59 @@
         </div>
       </li>
 
+      <!-- Multi-level dropdown button for case studies -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownResources" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Case Studies</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownResources">
+          <div class="dropdown-item dropdown-submenu">
+            <!-- Below are two ways to add a 'Kidney' button that displays a menu to the side when you hover it. Two ways separate from each other in terms of how the class of the button is set. 
+            If we use 'nav-link' class, the button has the default color for nav-link items which is white, which in turn makes the text invisible because the background for the dropdown list is also white. 
+            If we use 'dropdown-item', the text has the black color; however, then the text is aligned to the center. 
+            For the moment, I use 'dropdown-item' but I'd like to correct this
+            Note that this is the same for the other two case study buttons, as well --->
+            <!-- <a href="#" class="nav-link">Kidney</a> -->
+            <a href="{{ url_for('kidney_main') }}" class="dropdown-item">Kidney</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Workflow 1</a>
+              <a class="dropdown-item" href="#">Workflow 2</a>
+            </div>
+          </div>
+
+          <div class="dropdown-item dropdown-submenu">
+            <!-- <a href="#" class="nav-link">Parkinson</a> -->
+            <a href="{{ url_for('parkinson_main') }}" class="dropdown-item">Parkinson</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Workflow 1</a>
+              <a class="dropdown-item" href="#">Workflow 2</a>
+            </div>
+          </div>
+
+          <div class="dropdown-item dropdown-submenu">
+            <!-- <a href="#" class="nav-link">Thyroid</a> -->
+            <a href="{{ url_for('thyroid_main') }}" class="dropdown-item">Thyroid</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{{ url_for('thyroid_workflow_1') }}">Hackathon Demo Workflow</a>
+              <a class="dropdown-item" href="#">Workflow 2</a>
+            </div>
+          </div>
+          
+          <!-- <a class="dropdown-item" href="{{ url_for('service_list') }}">Parkinson</a>
+          <a class="dropdown-item" href="{{ url_for('service_list') }}">Thyroid</a> -->
+        </div>
+      </li>
+
       <!-- Uncomment the section below to add single button in the navigation bar  
       <li class="nav-item">
         <a class="nav-link" href="#">Contact</a>
       </li>
-      --> 
+      -->
+
     </ul>
   </div>
 </nav>
 
-<!-- Jinja template block -->
+<!-- Jinja template block to apply the style of this base.html on other pages. -->
+<!-- See this answer for a short explanation: https://stackoverflow.com/questions/53383602/what-is-block-content-and-endblock-content-for-in-django#answer-53383658 -->
 <div class="container mt-4">
     {% block content %}
     {% endblock %}
