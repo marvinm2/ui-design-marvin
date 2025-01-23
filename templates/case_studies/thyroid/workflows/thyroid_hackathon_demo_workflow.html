@@ -4,6 +4,59 @@
 <h1 style="color: white;">Thyroid Case Demo Workflow for the Hackthon</h1>
 <br>
 <div class="container">
+  <div class="row">
+    <div id="table_id" class="col-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Check</th>
+            <th scope="col">Compound</th>
+            <th scope="col">SMILES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck1" checked>
+                  <label class="custom-control-label" for="customCheck1">1</label>
+              </div>
+            </td>
+            <td>Bootstrap 4 CDN and Starter Template</td>
+            <td>Cristina</td>
+            <td>913</td>
+            <td>2.846</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck2">
+                  <label class="custom-control-label" for="customCheck2">2</label>
+              </div>
+            </td>
+            <td>Bootstrap Grid 4 Tutorial and Examples</td>
+            <td>Cristina</td>
+            <td>1.434</td>
+            <td>3.417</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck3">
+                  <label class="custom-control-label" for="customCheck3">3</label>
+              </div>
+            </td>
+            <td>Bootstrap Flexbox Tutorial and Examples</td>
+            <td>Cristina</td>
+            <td>1.877</td>
+            <td>1.234</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="container">
 	<section>
 		<p style="color: white;">Choose a compound</p>
 		<div class="dropdown-container">
@@ -14,4 +67,29 @@
 		<p style="color: white;">For more information see</p>
 	</section>
 </div>
+
+<script>
+  $(document).ready(function () {
+    // Fetch KE options and populate KE dropdown sorted by KE Label
+    $.getJSON("/get_dummy_data")
+      .done(function (data) {
+
+        // Populate KE ID dropdown
+        const table = $("#table_id");
+        table.empty();
+        data.forEach((option) => {
+          table.append(
+            `<option value="${option.Compound}" data-title="${option.SMILES}">${option.Compound} - ${option.SMILES}</option>`,
+            `<option value="${option.KElabel}" data-title="${option.KEtitle}">${option.KElabel} - ${option.KEtitle}</option>`,
+          );
+        });
+      })
+      .fail(function () {
+        console.error("Failed to load KE options"); // Debug log
+        $("#message").text("Failed to load Key Events").css("color", "red");
+      });
+    });
+  });
+</script>
+
 {% endblock %}
