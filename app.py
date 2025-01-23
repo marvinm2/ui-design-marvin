@@ -101,6 +101,24 @@ def thyroid_workflow_1():
 ################################################################################
 
 
+@app.route('/get_dummy_data', methods=['GET'])
+def get_dummy_data():
+    results = [
+    {
+        "Compound": "Compound1" ,
+        "SMILES": "Smile 1" 
+    },
+    {
+        "Compound": "Compound1" ,
+        "SMILES": "Smile 1" 
+    },
+    {
+        "Compound": "Compound1" ,
+        "SMILES": "Smile 1" 
+    }
+    ]
+    return results, 200
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
 
