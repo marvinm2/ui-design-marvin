@@ -12,7 +12,8 @@ body {
   font-weight: 400;
   font-style: normal;
   color: rgba(41, 35, 92, 0.7) !important;
-  background-color: rgba(48, 123, 191, 0.3) !important;
+  /* background-color: rgba(48, 123, 191, 0.3) !important; */
+  background-color: rgba(48, 123, 191, 1) !important;
 }
 
 /* Setting up the VHP4Safety logo at the top */
@@ -28,7 +29,8 @@ body {
 
 /* Setting up the navigation bar */
 .navbar {
-  background-color: rgba(41, 35, 92, 0.2) !important;
+  /* background-color: rgba(41, 35, 92, 0.2) !important; */
+  background-color: rgba(41, 35, 92, 1) !important;
 }
 
 /* Adjusting the items in the navigation bar to the center horizontally */
@@ -40,7 +42,8 @@ body {
 
 /* Changing the font color in the navigation bar to white */
 .navbar-nav .nav-link {
-  color: rgba(41, 35, 92, 0.7) !important;
+  /* color: rgba(41, 35, 92, 0.7) !important; */
+  color: white !important;
 }
 
 .navbar-nav .nav-link:hover {
