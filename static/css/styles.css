@@ -23,6 +23,7 @@ body {
 .container-fluid img {
   width: 50%;
   height: auto;
+  padding-bottom: 10px;
 }
 
 /* Setting up the navigation bar */
