@@ -2,5 +2,16 @@
 
 {% block content %}
 <h1 style="color: white;">Thyroid Case Demo Workflow for the Hackthon</h1>
-<p style="color: white;">Add the content here</p>
+<br>
+<div class="container">
+	<section>
+		<p style="color: white;">Choose a compound</p>
+		<div class="dropdown-container">
+			<select id="compound_id" name="compound_id" required>
+				<option value="" disabled selected>Pick a compound from the list</option>
+			</select>
+		</div>
+		<p style="color: white;">For more information see</p>
+	</section>
+</div>
 {% endblock %}
