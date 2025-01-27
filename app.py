@@ -164,7 +164,7 @@ def get_compounds():
     compound_list.append(SMILES.tolist())
     compound_list.append(ref.tolist())
 
-    return jsonify(compound_list), 200
+    return jsonify(Term.tolist()), 200
 
 ################################################################################
 
