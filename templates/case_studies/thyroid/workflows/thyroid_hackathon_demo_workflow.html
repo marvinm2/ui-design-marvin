@@ -97,26 +97,27 @@
 </script>
 ---> 
 
-<!---
+
 <script>
-  $.getJSON("/get_compounds")
-    .done(function (data) {
-      
+  console.log("here")
+  //$.getJSON("/get_compounds",)
+    // .done(function (data) {
+  $.getJSON("/get_compounds", function ( data ) {
+      console.log(data)
       // Populate the list of compounds dropdown
       const dropdown = $("#compound_id");
       dropdown.empty();
       dropdown.append('<option value="" disabled selected>Pick a compound from the list</option>');
       data.forEach(option => {
         dropdown.append(
-          `<option value="${option.Term}">${option.Term}</option>`
+          `<option value="${option}">${option}</option>`
           );
       });
     })
-    .fail(function () {
-      console.error("Failed to load the list of compounds"); // Debug log
-      $("#message").text("Failed to load list of compounds").css("color", "red");
-    });  
+    // .fail(function () {
+    //  console.error("Failed to load the list of compounds"); // Debug log
+    //  $("#message").text("Failed to load list of compounds").css("color", "red");
+    // });  
 </script>
---->
 
 {% endblock %}
