@@ -1,4 +1,6 @@
 
+### Python script to get the list of compounds from Compound Wiki. 
+
 # Importing the required modules.
 import requests
 from wikidataintegrator import wdi_core
@@ -24,6 +26,7 @@ WHERE{
 }
 '''
 
+
 # Setting up the spaqrl query for the vhp subset of the compounds. 
 sparqlquery_vhp = '''
 PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
@@ -44,7 +47,19 @@ WHERE {
 
 
 compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery_full, endpoint=compoundwikiEP, as_dataframe=True)
-compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery_vhp, endpoint=compoundwikiEP, as_dataframe=True)
+# compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery_vhp, endpoint=compoundwikiEP, as_dataframe=True)
 
 compound_dat.loc[:, "Term"]
 compound_dat.loc[:,["Term", "SMILES", "ID", "ref"]]
+
+SMILES = compound_dat[compound_dat.columns[0]]
+ID     = compound_dat[compound_dat.columns[1]]
+Term   = compound_dat[compound_dat.columns[2]]
+ref    = compound_dat[compound_dat.columns[3]]
+
+compound_list = []
+compound_list.append(Term.tolist())
+compound_list.append(SMILES.tolist())
+compound_list.append(ref.tolist())
+
+jsonify(compound_list)

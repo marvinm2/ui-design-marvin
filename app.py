@@ -1,5 +1,11 @@
-from flask import Flask, render_template
+
+################################################################################
+### Loading the required modules
+from flask import Flask, request, jsonify, render_template, send_file
 import requests
+from wikidataintegrator import wdi_core
+################################################################################
+
 
 app = Flask(__name__)
 
@@ -101,6 +107,8 @@ def thyroid_workflow_1():
 ################################################################################
 
 
+################################################################################
+### Tests for API calls and interactive pages.
 @app.route('/get_dummy_data', methods=['GET'])
 def get_dummy_data():
     results = [
@@ -118,6 +126,47 @@ def get_dummy_data():
     }
     ]
     return results, 200
+
+@app.route('/get_compounds', methods=['GET'])
+def get_compounds():
+    # Setting up the url for sparql endpoint.
+    compoundwikiEP = "https://compoundcloud.wikibase.cloud/query/sparql"
+
+    # Setting up the sparql query for the full list of compounds.
+    sparqlquery_full = '''
+    PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
+    PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
+
+    SELECT (substr(str(?cmp), 45) as ?ID) (?cmpLabel AS ?Term)
+        ?SMILES (?cmp AS ?ref)
+    WHERE{
+        { ?parent wdt:P21 wd:Q2059 ; wdt:P29 ?cmp . } UNION { ?cmp wdt:P21 wd:Q2059 . }
+    ?cmp wdt:P1 ?type ; rdfs:label ?cmpLabel . FILTER(lang(?cmpLabel) = 'en')
+    ?type rdfs:label ?typeLabel . FILTER(lang(?typeLabel) = 'en')
+    OPTIONAL { ?cmp wdt:P7 ?chiralSMILES }
+    OPTIONAL { ?cmp wdt:P12 ?nonchiralSMILES }
+    BIND (COALESCE(IF(BOUND(?chiralSMILES), ?chiralSMILES, 1/0), IF(BOUND(?nonchiralSMILES), ?nonchiralSMILES, 1/0),"") AS ?SMILES)
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    }
+    '''
+
+    # Making the sparql query.
+    compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery_full, endpoint=compoundwikiEP, as_dataframe=True)
+
+    # Organizing the output into a list object.
+    SMILES = compound_dat[compound_dat.columns[0]]
+    ID     = compound_dat[compound_dat.columns[1]]
+    Term   = compound_dat[compound_dat.columns[2]]
+    ref    = compound_dat[compound_dat.columns[3]]
+
+    compound_list = []
+    compound_list.append(Term.tolist())
+    compound_list.append(SMILES.tolist())
+    compound_list.append(ref.tolist())
+
+    return jsonify(compound_list), 200
+
+################################################################################
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
