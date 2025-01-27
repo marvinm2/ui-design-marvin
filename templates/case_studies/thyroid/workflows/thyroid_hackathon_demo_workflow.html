@@ -3,6 +3,8 @@
 {% block content %}
 <h1 style="color: white;">Thyroid Case Demo Workflow for the Hackthon</h1>
 <br>
+
+<!---
 <div class="container">
   <div class="row">
     <div id="table_id" class="col-12">
@@ -56,6 +58,8 @@
     </div>
   </div>
 </div>
+--->
+
 <div class="container">
 	<section>
 		<p style="color: white;">Choose a compound</p>
@@ -68,6 +72,7 @@
 	</section>
 </div>
 
+<!--- Below is the part for getting a table with tick marks
 <script>
   $(document).ready(function () {
     // Fetch KE options and populate KE dropdown sorted by KE Label
@@ -89,7 +94,29 @@
         $("#message").text("Failed to load Key Events").css("color", "red");
       });
     });
-  });
 </script>
+---> 
+
+<!---
+<script>
+  $.getJSON("/get_compounds")
+    .done(function (data) {
+      
+      // Populate the list of compounds dropdown
+      const dropdown = $("#compound_id");
+      dropdown.empty();
+      dropdown.append('<option value="" disabled selected>Pick a compound from the list</option>');
+      data.forEach(option => {
+        dropdown.append(
+          `<option value="${option.Term}">${option.Term}</option>`
+          );
+      });
+    })
+    .fail(function () {
+      console.error("Failed to load the list of compounds"); // Debug log
+      $("#message").text("Failed to load list of compounds").css("color", "red");
+    });  
+</script>
+--->
 
 {% endblock %}
