@@ -60,16 +60,18 @@
 </div>
 --->
 
+
 <div class="container">
-	<section>
-		<p style="color: white;">Choose a compound</p>
-		<div class="dropdown-container">
-			<select id="compound_id" name="compound_id" required>
-				<option value="" disabled selected>Pick a compound from the list</option>
-			</select>
-		</div>
-		<p style="color: white;">For more information see</p>
-	</section>
+  <section>
+      <p style="color: white;">Choose a compound:</p>
+      <div class="dropdown-container">
+          <select id="compound_id" name="compound_id" required>
+              <option value="" disabled selected>Pick a compound from the list</option>
+          </select>
+      </div>
+      <p style="color: white; margin-top: 20px;">Selected compound and SMILES:</p>
+      <p id="selected_info" style="color: white; font-weight: bold;">None</p>
+  </section>
 </div>
 
 <!--- Below is the part for getting a table with tick marks
@@ -99,25 +101,26 @@
 
 
 <script>
-  console.log("here")
-  //$.getJSON("/get_compounds",)
-    // .done(function (data) {
-  $.getJSON("/get_compounds", function ( data ) {
-      console.log(data)
-      // Populate the list of compounds dropdown
+  // Fetch the list of compounds with their SMILES from the server
+  $.getJSON("/get_compounds", function (data) {
+      console.log(data); // Debug log
       const dropdown = $("#compound_id");
       dropdown.empty();
       dropdown.append('<option value="" disabled selected>Pick a compound from the list</option>');
       data.forEach(option => {
-        dropdown.append(
-          `<option value="${option}">${option}</option>`
+          dropdown.append(
+              `<option value="${option.SMILES}" data-term="${option.Term}">${option.Term}</option>`
           );
       });
-    })
-    // .fail(function () {
-    //  console.error("Failed to load the list of compounds"); // Debug log
-    //  $("#message").text("Failed to load list of compounds").css("color", "red");
-    // });  
+  });
+
+  // Listen for changes in the dropdown and display the selected compound and SMILES
+  $("#compound_id").on("change", function () {
+      const selectedTerm = $(this).find(":selected").data("term");
+      const selectedSMILES = $(this).val();
+      console.log("Selected:", `${selectedTerm}: ${selectedSMILES}`); // Debug log
+      $("#selected_info").text(selectedTerm && selectedSMILES ? `${selectedTerm}: ${selectedSMILES}` : "None");
+  });
 </script>
 
 {% endblock %}
