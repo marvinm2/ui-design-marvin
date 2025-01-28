@@ -137,7 +137,7 @@ def get_compounds():
     PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
     PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
 
-    SELECT (substr(str(?cmp), 45) as ?ID) (?cmpLabel AS ?Term)
+    SELECT DISTINCT (substr(str(?cmp), 45) as ?ID) (?cmpLabel AS ?Term)
         ?SMILES (?cmp AS ?ref)
     WHERE{
         { ?parent wdt:P21 wd:Q2059 ; wdt:P29 ?cmp . } UNION { ?cmp wdt:P21 wd:Q2059 . }
