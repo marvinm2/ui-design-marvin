@@ -54,28 +54,46 @@ def service_list():
     url = f'https://api.github.com/repos/VHP4Safety/cloud/contents/docs/service'
     response = requests.get(url)
 
-    # Checking if the request was successful (status code 200)
+    # Checking if the request was successful (status code 200).
     if response.status_code == 200:
         # Extracting the list of files.
         service_content = response.json()
-        
-        ##########################################
-        ### Filtering the .md files in service_content.
-        service_list = [file['name'] for file in service_content if file['type'] == 'file' and file['name'].endswith('.md')]
-        ##########################################
 
-        ##########################################
-        ### Trying to add links to the items -- could not manage to get it work 
-        # md_files_list = [
-        #    {
-        #         'name': file['name'],
-        #         'url': f'https://github.com/VHP4Safety/cloud/blob/main/{file["name"]}'
-        #     }
-        #     for file in service_content if file['type'] == 'file' and file['name'].endswith('.md')
-        # ]
-        ##########################################
+        # Separating .json and .md files.
+        json_files = {file['name']: file for file in service_content if file['type'] == 'file' and file['name'].endswith('.json')}
+        md_files = {file['name']: file for file in service_content if file['type'] == 'file' and file['name'].endswith('.md')}
 
-        return render_template('services/service_list.html', files=service_list)
+        # Creating an empty list to store the results. 
+        services = []
+
+        # Fetching the .json files.
+        for json_file_name, json_file in json_files.items():
+            # Skipping the template.json file. 
+            if json_file_name == 'template.json':
+                continue  
+            
+            json_url = json_file['download_url']  # Using the download URL from the API response.
+            json_response = requests.get(json_url)
+
+            if json_response.status_code == 200:
+                json_data = json_response.json()
+                
+                # Extracting the 'service' field from the json file.
+                service_name = json_data.get('service')
+                
+                if service_name:
+                    # Replacing the .json extension with the .md to get the corresponding .md file.
+                    md_file_name = json_file_name.replace('.json', '.md')
+                    
+                    if md_file_name in md_files:
+                        md_file_url = f'https://raw.githubusercontent.com/VHP4Safety/cloud/main/docs/service/{md_file_name}'
+                        services.append({
+                            'service': service_name,
+                            'url': md_file_url
+                        })
+
+        # Passing the services data to the template after processing all JSON files.
+        return render_template('services/service_list.html', services=services)
     else:
         return f"Error fetching files: {response.status_code}"
 
