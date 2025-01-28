@@ -137,7 +137,7 @@ def get_compounds():
     PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
     PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
 
-    SELECT (substr(str(?cmp), 45) as ?ID) (?cmpLabel AS ?Term)
+    SELECT DISTINCT (substr(str(?cmp), 45) as ?ID) (?cmpLabel AS ?Term)
         ?SMILES (?cmp AS ?ref)
     WHERE{
         { ?parent wdt:P21 wd:Q2059 ; wdt:P29 ?cmp . } UNION { ?cmp wdt:P21 wd:Q2059 . }
@@ -150,21 +150,15 @@ def get_compounds():
     }
     '''
 
-    # Making the sparql query.
+     # Making the SPARQL query
     compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery_full, endpoint=compoundwikiEP, as_dataframe=True)
 
-    # Organizing the output into a list object.
-    SMILES = compound_dat[compound_dat.columns[0]]
-    ID     = compound_dat[compound_dat.columns[1]]
-    Term   = compound_dat[compound_dat.columns[2]]
-    ref    = compound_dat[compound_dat.columns[3]]
-
+    # Organizing the output into a list of dictionaries
     compound_list = []
-    compound_list.append(Term.tolist())
-    compound_list.append(SMILES.tolist())
-    compound_list.append(ref.tolist())
+    for _, row in compound_dat.iterrows():
+        compound_list.append({"Term": row[2], "SMILES": row[0]})
 
-    return jsonify(Term.tolist()), 200
+    return jsonify(compound_list), 200
 
 ################################################################################
 
