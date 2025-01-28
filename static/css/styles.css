@@ -16,6 +16,19 @@ body {
   background-color: rgba(48, 123, 191, 1) !important;
 }
 
+/* Heading Styling */
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  color: white;
+}
+
+/* Paragraph Styling */
+p {
+  margin: 10px 0;
+  color: white
+}
+
 /* Setting up the VHP4Safety logo at the top */
 .container-fluid {
   text-align: center;
@@ -95,3 +108,52 @@ body {
 .p {
   justify-content: center;
 }
+
+
+/* Nice table styling */
+/* Styling the results table container */
+/* Ensure the results table is responsive */
+#results_container {
+  background-color: #ffffff; /* Solid white background */
+  border: 2px solid #29235c; /* Dark blue border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px; /* Padding around the container */
+  margin-top: 20px; /* Space above the table */
+  overflow-x: auto; /* Enable horizontal scrolling for wide tables */
+}
+
+#results_table {
+  background-color: #f8f9fa; /* Light gray table background */
+  border-collapse: separate; /* Separate cell borders */
+  border-spacing: 0; /* Remove extra spacing between cells */
+  width: 100%; /* Ensure table fits container */
+  min-width: 800px; /* Set a minimum width to prevent columns from collapsing */
+  font-size: 14px; /* Font size */
+  color: #29235c; /* Dark blue text */
+}
+
+#results_table th,
+#results_table td {
+  border: 1px solid #dee2e6; /* Cell borders */
+  padding: 8px; /* Cell padding */
+  text-align: center; /* Center-align text */
+}
+
+#results_table th {
+  background-color: #29235c; /* Dark blue header background */
+  color: #ffffff; /* White header text */
+}
+
+#results_table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2; /* Light gray for odd rows */
+}
+
+#results_table tbody tr:nth-child(even) {
+  background-color: #ffffff; /* White for even rows */
+}
+
+#results_table tbody tr:hover {
+  background-color: #e6e6fa; /* Lavender highlight on hover */
+}
+
