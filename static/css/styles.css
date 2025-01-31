@@ -1,19 +1,17 @@
 /* 
 VHP4Safety brand colors: 
 #29235C or rgba(41, 35, 92, 1): Dark blue
-#307BBF or rgba(48, 123, 191, 1) : Light blue
-#E6007E or rgba(230, 0, 126, 1): Pinkk 
+#307BBF or rgba(48, 123, 191, 1): Light blue
+#E6007E or rgba(230, 0, 126, 1): Pink
 */
 
-/* Setting up the background color and Bree font*/
+/* General styling */
 body {
-  background-color: #307bbf;
+  background-color: rgba(48, 123, 191, 1) !important;
   font-family: "Bree Serif", serif;
   font-weight: 400;
   font-style: normal;
   color: rgba(41, 35, 92, 0.7) !important;
-  /* background-color: rgba(48, 123, 191, 0.3) !important; */
-  background-color: rgba(48, 123, 191, 1) !important;
 }
 
 /* Heading Styling */
@@ -26,36 +24,34 @@ h1 {
 /* Paragraph Styling */
 p {
   margin: 10px 0;
-  color: white
+  color: white;
+  text-align: justify;
 }
 
-/* Setting up the VHP4Safety logo at the top */
-.container-fluid {
+/* Header Section */
+header {
   text-align: center;
+  padding: 20px 0;
 }
 
-.container-fluid img {
+header img {
   width: 50%;
   height: auto;
   padding-bottom: 10px;
 }
 
-/* Setting up the navigation bar */
+/* Navigation Bar */
 .navbar {
-  /* background-color: rgba(41, 35, 92, 0.2) !important; */
   background-color: rgba(41, 35, 92, 1) !important;
 }
 
-/* Adjusting the items in the navigation bar to the center horizontally */
 .navbar-nav {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-/* Changing the font color in the navigation bar to white */
 .navbar-nav .nav-link {
-  /* color: rgba(41, 35, 92, 0.7) !important; */
   color: white !important;
 }
 
@@ -63,97 +59,96 @@ p {
   color: rgba(230, 0, 126, 0.7) !important;
 }
 
-/* Stylization for the multi-level dropdown button */
-/*
-.dropdown-menu li {
-position: relative;
-}
-.dropdown-menu .dropdown-submenu {
-display: none;
-position: absolute;
-left: 100%;
-top: -7px;
-}
-.dropdown-menu .dropdown-submenu-left {
-right: 100%;
-left: auto;
-}
-.dropdown-menu > li:hover > .dropdown-submenu {
-display: block;
-}
-/* Make the nested dropdown menu appear on hover */
-/* Make the nested dropdown menu appear on hover */
-.dropdown-submenu {
-  position: relative;
+/* Dropdown Styling */
+.dropdown-menu {
+  background-color: rgba(41, 35, 92, 0.9);
 }
 
-.dropdown-submenu .dropdown-menu {
-  display: none; /* Initially hidden */
-  position: absolute;
-  top: 0;
-  left: 100%; /* Position it to the right of the "Kidney" button */
-  margin-top: -1px; /* Align with the parent item */
+.dropdown-menu .dropdown-item {
+  color: white;
 }
 
-.dropdown-submenu:hover .dropdown-menu {
-  display: block; /* Show the nested dropdown when hovering over the parent */
-}
-*/
-
-/* Setting up the Bree font type, although not sure if this works. I don't notice a change after applying this */
-body {
-  font-family: "Bree Serif", sans-serif;
+.dropdown-menu .dropdown-item:hover {
+  background-color: rgba(230, 0, 126, 0.7);
+  color: white;
 }
 
-.p {
-  justify-content: center;
+/* Main Content Styling */
+main {
+  padding: 20px;
 }
 
+/* Footer Styling */
+footer {
+  background-color: rgba(48, 123, 191, 1) !important;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  margin-top: 20px;
+}
 
-/* Nice table styling */
-/* Styling the results table container */
-/* Ensure the results table is responsive */
+/* Table Styling */
 #results_container {
-  background-color: #ffffff; /* Solid white background */
-  border: 2px solid #29235c; /* Dark blue border */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  padding: 20px; /* Padding around the container */
-  margin-top: 20px; /* Space above the table */
-  overflow-x: auto; /* Enable horizontal scrolling for wide tables */
+  background-color: #ffffff;
+  border: 2px solid #29235c;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+  overflow-x: auto;
 }
 
 #results_table {
-  background-color: #f8f9fa; /* Light gray table background */
-  border-collapse: separate; /* Separate cell borders */
-  border-spacing: 0; /* Remove extra spacing between cells */
-  width: 100%; /* Ensure table fits container */
-  min-width: 800px; /* Set a minimum width to prevent columns from collapsing */
-  font-size: 14px; /* Font size */
-  color: #29235c; /* Dark blue text */
+  background-color: #f8f9fa;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  min-width: 800px;
+  font-size: 14px;
+  color: #29235c;
 }
 
 #results_table th,
 #results_table td {
-  border: 1px solid #dee2e6; /* Cell borders */
-  padding: 8px; /* Cell padding */
-  text-align: center; /* Center-align text */
+  border: 1px solid #dee2e6;
+  padding: 8px;
+  text-align: center;
 }
 
 #results_table th {
-  background-color: #29235c; /* Dark blue header background */
-  color: #ffffff; /* White header text */
+  background-color: #29235c;
+  color: #ffffff;
 }
 
 #results_table tbody tr:nth-child(odd) {
-  background-color: #f2f2f2; /* Light gray for odd rows */
+  background-color: #f2f2f2;
 }
 
 #results_table tbody tr:nth-child(even) {
-  background-color: #ffffff; /* White for even rows */
+  background-color: #ffffff;
 }
 
 #results_table tbody tr:hover {
-  background-color: #e6e6fa; /* Lavender highlight on hover */
+  background-color: #e6e6fa;
 }
 
+.service-list ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: left;
+}
+
+.service-list li {
+  margin: 10px 0;
+}
+
+.service-list a {
+  color: white;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.service-list a:hover {
+  color: rgba(230, 0, 126, 0.7);
+  text-decoration: underline;
+}
