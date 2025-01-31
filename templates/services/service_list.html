@@ -1,24 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service List</title>
-</head>
-<body>
+  <header>
     <h1>Services</h1>
-    <ul>
-        {% for service in services %}
-            <li><a style="color: white"; href="{{ service.url }}" target="_blank">{{ service.service }}</a></li>
-        {% else %}
-            <li>No services found.</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+  </header>
 
+  <section class="service-list">
+    <ul>
+      {% for service in services %}
+        <li><a href="{{ service.url }}" target="_blank">{{ service.service }}</a></li>
+      {% else %}
+        <li>No services found.</li>
+      {% endfor %}
+    </ul>
+  </section>
 {% endblock %}

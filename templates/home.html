@@ -1,10 +1,16 @@
-<!--These {} lines required for Jinja templating and keeping the format from the base in these pages refering to the Jinja template block in the base.html -->
 {% extends "base.html" %}
 
 {% block content %}
+  <header>
+    <h1>Welcome to VHP4Safety</h1>
+  </header>
 
-<!-- <div class="container text-center"> -->
-	<h1 style="color: white;">Welcome to VHP4Safety</h1>
-	<p style="color: white;">Hi There! You have reached the public documentation pages for the Virtual Human Platform for Safety Evaluation of Chemicals. This is a large Dutch research project, funded by NWO. These pages contain information, documentation, installation instructions and demos on how to use the software, models and data generated in the project.</p>
-<!-- <div> -->
+  <section class="home-intro">
+    <p>
+      Hi There! You have reached the public documentation pages for the Virtual Human Platform 
+      for Safety Evaluation of Chemicals. This is a large Dutch research project, funded by NWO. 
+      These pages contain information, documentation, installation instructions, and demos on how to use 
+      the software, models, and data generated in the project.
+    </p>
+  </section>
 {% endblock %}
