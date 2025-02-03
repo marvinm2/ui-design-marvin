@@ -1,9 +1,19 @@
 /* 
 VHP4Safety Brand Colors: 
 Dark Blue: #29235C 
-Light Blue: #307BBF 
+Blue: #307BBF 
 Pink: #E6007E 
 */
+
+/* Define color variables */
+:root {
+  --dark-blue: #29235c;
+  --blue: #307bbf;
+  --light-blue: #e6e6fa;
+  --pink: #e6007e;
+  --white: #ffffff;
+  --table-row-light-gray: #f2f2f2; /* For alternating table row colors */
+}
 
 html {
   scroll-behavior: smooth;
@@ -16,26 +26,27 @@ section {
 
 /* General Styling */
 body {
-  background-color: #307bbf !important;
+  background-color: var(--blue);
   font-family: sans-serif;
   font-weight: 400;
   font-style: normal;
-  color: white;
+  color: var(--white);
 }
 
 /* Headings */
 h1 {
-  color: white;
+  color: var(--white);
   text-align: center;
-  border-bottom: 2px solid #ddd; /* Light gray border */
+  border-bottom: 2px solid var(--white);
   padding-bottom: 0px;
   margin-top: 30px;
 }
 
 h2 {
-  color: white;
+  color: var(--white);
   text-align: left;
   font-size: 1.5rem;
+  font-weight: bold;
 }
 
 /* Paragraphs */
@@ -45,13 +56,13 @@ p {
 
 /* Links */
 a {
-  color: #e6007e;
+  color: var(--pink);
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
-  color: #29235c;
+  color: var(--dark-blue);
 }
 
 /* Images */
@@ -65,8 +76,8 @@ img {
 
 /* Footer */
 footer {
-  background-color: #307bbf;
-  color: white;
+  background-color: var(--blue);
+  color: var(--white);
   text-align: center;
   padding: 15px 0;
   margin-top: 20px;
@@ -74,12 +85,12 @@ footer {
 
 /* Navigation Bar */
 .navbar {
-  background-color: white;
-  position: sticky; /* Make navbar stick at the top */
+  background-color: var(--white);
+  position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px var(--dark-blue);
 }
 
 .navbar-nav {
@@ -96,33 +107,33 @@ footer {
 
 /* Navbar links */
 .navbar-nav .nav-link {
-  color: #29235c;
+  color: var(--dark-blue);
 }
 
 .navbar-nav .nav-link:hover {
-  color: rgba(230, 0, 126, 0.7) !important;
+  color: var(--pink);
 }
 
 /* Dropdown Styling */
 .dropdown-menu {
-  background-color: white;
+  background-color: var(--white);
 }
 
 .dropdown-menu .dropdown-item {
-  color: #29235c;
+  color: var(--dark-blue);
 }
 
 .dropdown-menu .dropdown-item:hover {
-  background-color: rgba(230, 0, 126, 0.7);
-  color: white;
+  background-color: var(--pink);
+  color: var(--white);
 }
 
 /* Table Styling */
 #results_container {
-  background-color: white;
-  border: 2px solid #29235c;
+  background-color: var(--white);
+  border: 2px solid var(--dark-blue);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px var(--dark-blue);
   padding: 20px;
   margin-top: 20px;
   overflow-x: auto;
@@ -133,33 +144,33 @@ footer {
   min-width: 800px;
   border-collapse: separate;
   border-spacing: 0;
-  background-color: #f8f9fa;
-  color: #29235c;
+  background-color: var(--light-blue);
+  color: var(--dark-blue);
   font-size: 14px;
 }
 
 #results_table th,
 #results_table td {
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--dark-blue);
   padding: 8px;
   text-align: center;
 }
 
 #results_table th {
-  background-color: #29235c;
-  color: white;
+  background-color: var(--dark-blue);
+  color: var(--white);
 }
 
 #results_table tbody tr:nth-child(odd) {
-  background-color: #f2f2f2;
+  background-color: var(--table-row-light-gray);
 }
 
 #results_table tbody tr:nth-child(even) {
-  background-color: white;
+  background-color: var(--white);
 }
 
 #results_table tbody tr:hover {
-  background-color: #e6e6fa;
+  background-color: var(--light-blue);
 }
 
 /* Service List */
@@ -169,12 +180,12 @@ footer {
   text-align: left;
 }
 .service-list a {
-  color: white;
+  color: var(--white);
   font-size: 1.2rem;
   text-decoration: none;
 }
 
 .service-list a:hover {
-  color: rgba(230, 0, 126, 0.7);
+  color: var(--pink);
   text-decoration: underline;
 }
