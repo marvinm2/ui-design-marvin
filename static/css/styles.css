@@ -27,6 +27,9 @@ body {
 h1 {
   color: white;
   text-align: center;
+  border-bottom: 2px solid #ddd; /* Light gray border */
+  padding-bottom: 0px;
+  margin-top: 30px;
 }
 
 h2 {
@@ -35,18 +38,12 @@ h2 {
   font-size: 1.5rem;
 }
 
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 100%;
-  height: auto;
-}
-
+/* Paragraphs */
 p {
   font-size: 1.1rem;
 }
 
+/* Links */
 a {
   color: #e6007e;
   text-decoration: none;
@@ -55,6 +52,24 @@ a {
 a:hover {
   text-decoration: underline;
   color: #29235c;
+}
+
+/* Images */
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Footer */
+footer {
+  background-color: #307bbf;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  margin-top: 20px;
 }
 
 /* Navigation Bar */
@@ -100,15 +115,6 @@ a:hover {
 .dropdown-menu .dropdown-item:hover {
   background-color: rgba(230, 0, 126, 0.7);
   color: white;
-}
-
-/* Footer */
-footer {
-  background-color: #307bbf !important;
-  color: white;
-  text-align: center;
-  padding: 15px 0;
-  margin-top: 20px;
 }
 
 /* Table Styling */
