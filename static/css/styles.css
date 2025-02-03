@@ -20,13 +20,11 @@ body {
 h1 {
   font-size: 2rem;
   text-align: center;
-  color: white;
 }
 
 /* Paragraph Styling */
 p {
   margin: 10px 0;
-  color: white
 }
 
 /* Setting up the VHP4Safety logo at the top */
@@ -63,6 +61,10 @@ p {
   color: rgba(230, 0, 126, 0.7) !important;
 }
 
+.btn-outline-info {
+  justify-content: center;
+  margin: 10px;
+}
 /* Stylization for the multi-level dropdown button */
 /*
 .dropdown-menu li {
@@ -81,8 +83,9 @@ left: auto;
 .dropdown-menu > li:hover > .dropdown-submenu {
 display: block;
 }
+
 /* Make the nested dropdown menu appear on hover */
-/* Make the nested dropdown menu appear on hover */
+
 .dropdown-submenu {
   position: relative;
 }
@@ -98,21 +101,45 @@ display: block;
 .dropdown-submenu:hover .dropdown-menu {
   display: block; /* Show the nested dropdown when hovering over the parent */
 }
-*/
 
-/* Setting up the Bree font type, although not sure if this works. I don't notice a change after applying this */
-body {
-  font-family: "Bree Serif", sans-serif;
-}
-
-.p {
+*/ .p {
   justify-content: center;
 }
 
+.card {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 6px 10px 6px rgba(230, 0, 126, 0.5); /* Subtle shadow */
+  background-color: rgba(255, 255, 255, 1) !important;
+}
+
+.card-title {
+  color: rgba(48, 123, 191, 1) !important;
+  font: bold;
+}
+
+.card-body {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+#desc {
+  color: rgba(41, 35, 92, 1) !important;
+}
 
 /* Nice table styling */
 /* Styling the results table container */
 /* Ensure the results table is responsive */
+#select-services {
+  background-color: #ffffff; /* Solid white background */
+  border: 2px solid #29235c; /* Dark blue border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px; /* Padding around the container */
+  margin-top: 20px; /* Space above the table */
+  overflow-x: auto; /* Enable horizontal scrolling for wide tables */
+}
+
 #results_container {
   background-color: #ffffff; /* Solid white background */
   border: 2px solid #29235c; /* Dark blue border */
@@ -142,7 +169,6 @@ body {
 
 #results_table th {
   background-color: #29235c; /* Dark blue header background */
-  color: #ffffff; /* White header text */
 }
 
 #results_table tbody tr:nth-child(odd) {
@@ -156,4 +182,3 @@ body {
 #results_table tbody tr:hover {
   background-color: #e6e6fa; /* Lavender highlight on hover */
 }
-

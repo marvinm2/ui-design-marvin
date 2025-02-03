@@ -62,6 +62,7 @@ def service_list():
         # Separating .json and .md files.
         json_files = {file['name']: file for file in service_content if file['type'] == 'file' and file['name'].endswith('.json')}
         md_files = {file['name']: file for file in service_content if file['type'] == 'file' and file['name'].endswith('.md')}
+        png_files = {file['name']: file for file in service_content if file['type'] == 'file' and file['name'].endswith('.png')}
 
         # Creating an empty list to store the results. 
         services = []
@@ -70,8 +71,8 @@ def service_list():
         for json_file_name, json_file in json_files.items():
             # Skipping the template.json file. 
             if json_file_name == 'template.json':
-                continue  
-            
+                continue
+ 
             json_url = json_file['download_url']  # Using the download URL from the API response.
             json_response = requests.get(json_url)
 
@@ -80,20 +81,49 @@ def service_list():
                 
                 # Extracting the 'service' field from the json file.
                 service_name = json_data.get('service')
-                
+                description_string = json_data.get('description') 
+
                 if service_name:
                     # Replacing the .json extension with the .md to get the corresponding .md file.
                     md_file_name = json_file_name.replace('.json', '.md')
-                    
+                    html_name = json_file_name.replace('.json', '.html')
+                    url = "https://cloud.vhp4safety.nl/service/"+ html_name 
+
                     if md_file_name in md_files:
                         md_file_url = f'https://raw.githubusercontent.com/VHP4Safety/cloud/main/docs/service/{md_file_name}'
+                    else:
+                        md_file_url = "md file not found"
+                    png_file_name = md_file_name.replace('.md', '.png')
+
+                    if png_file_name in png_files:
+                        png_file_url = f'https://raw.githubusercontent.com/VHP4Safety/cloud/main/docs/service/{png_file_name}'
                         services.append({
                             'service': service_name,
-                            'url': md_file_url
+                            'url': url,
+                            'meta_data': md_file_url,
+                            'description': description_string,
+                            'png': png_file_url
+                        })
+                    else:
+                        services.append({
+                            'service': service_name,
+                            'url': url,
+                            'meta_data': md_file_url,
+                            'description': description_string,
+                            'png': "../../static/images/logo.png"
                         })
 
+        mid=len(services) // 2
+        chunk1 = services[ :mid]
+        chunk2 = services[mid: ]
+        print("Chunk1:")
+        print(chunk1)
+
+        print("Chunk2:")
+        print(chunk2)
+
         # Passing the services data to the template after processing all JSON files.
-        return render_template('services/service_list.html', services=services)
+        return render_template('services/service_list.html', chunk1=chunk1, chunk2=chunk2)
     else:
         return f"Error fetching files: {response.status_code}"
 
