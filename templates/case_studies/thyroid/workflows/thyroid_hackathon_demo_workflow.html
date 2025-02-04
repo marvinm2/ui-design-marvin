@@ -20,40 +20,33 @@
 
 <div class="container">
   <section>
-    <p>Select compounds from the table:</p>
-    <table class="table table-bordered table-striped" id="compound_table">
-      <thead>
-        <tr>
-          <th>Select</th>
-          <th>Compound</th>
-          <th>SMILES</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <!-- Service Selection Section -->
-    <div class="container">
-      <p>Select services to run:</p>
-      <div id="service_selection">
-        <label
-          ><input
-            type="checkbox"
-            class="service-checkbox"
-            value="QSPR"
-            id="qspr_checkbox"
-          />
-          QSPR</label
-        ><br />
-        <label
-          ><input
-            type="checkbox"
-            class="service-checkbox"
-            value="SOMpredictor"
-            id="sompredictor_checkbox"
-          />
-          SOMpredictor</label
-        >
+      <p>Select compounds from the table:</p>
+      <table class="table table-bordered table-striped" id="compound_table"> 
+          <thead>
+              <tr>
+                  <th>Select</th>
+                  <th>Compound</th>
+                  <th>SMILES</th>
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Rows will be dynamically populated -->
+          </tbody>
+      </table>
+      <!-- Service Selection Section -->
+      <div id="select-services" class="container">
+        <p>Select services to run:</p>
+        <div id="service_selection">
+            <label>
+                <input type="checkbox" class="service-checkbox" value="QSPR" id="qspr_checkbox">
+                QSPR
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" class="service-checkbox" value="SOMpredictor" id="sompredictor_checkbox">
+                SOMpredictor
+            </label>
+        </div>
       </div>
     </div>
 
