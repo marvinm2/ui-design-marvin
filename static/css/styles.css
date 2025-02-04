@@ -19,11 +19,6 @@ html {
   scroll-behavior: smooth;
 }
 
-section {
-  padding-top: 80px; /* Set to the height of your navbar */
-  margin-top: -80px;
-}
-
 /* General Styling */
 body {
   background-color: var(--blue);
@@ -31,6 +26,11 @@ body {
   font-weight: 400;
   font-style: normal;
   color: var(--white);
+}
+
+section {
+  padding-top: 80px; /* Set to the height of your navbar */
+  margin-top: -80px;
 }
 
 /* Headings */
@@ -49,20 +49,15 @@ h2 {
   font-weight: bold;
 }
 
-/* Paragraphs */
-p {
-  font-size: 1.1rem;
-}
-
 /* Links */
 a {
-  color: var(--pink);
+  color: var(--dark-blue);
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
-  color: var(--dark-blue);
+  color: var(--pink);
 }
 
 /* Images */
