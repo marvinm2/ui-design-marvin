@@ -143,51 +143,6 @@ footer {
   display: block;
 }
 
-/* Table Styling */
-#results_container {
-  background-color: var(--white);
-  border: 2px solid var(--dark-blue);
-  border-radius: 8px;
-  box-shadow: 0 4px 8px var(--dark-blue);
-  padding: 20px;
-  margin-top: 20px;
-  overflow-x: auto;
-}
-
-#results_table {
-  width: 100%;
-  min-width: 800px;
-  border-collapse: separate;
-  border-spacing: 0;
-  background-color: var(--light-blue);
-  color: var(--dark-blue);
-  font-size: 14px;
-}
-
-#results_table th,
-#results_table td {
-  border: 1px solid var(--dark-blue);
-  padding: 8px;
-  text-align: center;
-}
-
-#results_table th {
-  background-color: var(--dark-blue);
-  color: var(--white);
-}
-
-#results_table tbody tr:nth-child(odd) {
-  background-color: var(--table-row-light-gray);
-}
-
-#results_table tbody tr:nth-child(even) {
-  background-color: var(--white);
-}
-
-#results_table tbody tr:hover {
-  background-color: var(--light-blue);
-}
-
 /* Service List */
 .service-list ul {
   list-style-type: none;
@@ -205,42 +160,61 @@ footer {
   text-decoration: underline;
 }
 
-.service-section {
+/* Thyroid Workflow 1 */
+/* Tables */
+th {
+  /* Header */
+  background-color: var(--dark-blue);
+  color: var(--white);
+  text-align: center;
+}
+
+tbody {
+  /* Body */
+  background-color: var(--light-blue);
+  font-size: 0.9em;
+  color: var(--dark-blue);
+}
+
+table tr:nth-child(odd):not(:hover) {
+  background-color: var(--table-row-light-gray);
+}
+
+tbody tr:nth-child(even):not(:hover) {
+  background-color: var(--white);
+}
+
+tbody tr:hover {
+  background-color: var(--light-blue);
+  cursor: pointer;
+}
+
+/* Specific Compound Table Adjustments */
+#compound_table td:first-child {
+  text-align: center; /* Puts checkbox in the center of the column */
+}
+
+#compound_table td:nth-child(3) {
+  font-size: 0.8em; /* Makes SMILES font a little smaller */
+}
+
+.qspr-section {
   margin-top: 20px;
   padding-left: 30px;
   background-color: var(--blue);
   display: none;
 }
 
-#compound_table th,
-#compound_table td {
-  text-align: center;
-}
-
-#compound_table th {
-  background-color: #29235c;
-  color: #ffffff;
-}
-
-#compound_table tbody tr:nth-child(odd) {
-  background-color: #f9f9f9;
-}
-
-#compound_table tbody tr:nth-child(even) {
-  background-color: #ffffff;
-}
-
-#compound_table tbody tr:hover {
-  background-color: #e6e6fa;
-  cursor: pointer;
-}
-
-#compound_table td:nth-child(3) {
-  font-size: 0.8em;
-}
-
+/* Results Container */
 #results_container {
   display: none;
+  background-color: var(--white);
+  border: 2px solid var(--dark-blue);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--dark-blue);
+  padding: 20px;
+  margin-top: 20px;
+  overflow-x: auto;
 }
 
 #results_container h2 {
