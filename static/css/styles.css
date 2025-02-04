@@ -43,6 +43,7 @@ h1 {
   border-bottom: 2px solid var(--white);
   padding-bottom: 0px;
   margin-top: 30px;
+  font-size: 2rem;
 }
 
 h2 {
@@ -234,6 +235,49 @@ tbody tr:hover {
   color: var(--dark-blue);
 }
 
+/* Partner Carousel */
+.swiper-container {
+  display: inline-block;
+  width: 100%;
+  max-width: 100%;
+  margin: auto;
+  padding: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+.swiper-wrapper {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 200px;
+}
+.swiper-slide img {
+  height: auto;
+  width: auto;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.swiper-slide img:hover {
+  transform: scale(1.05);
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--dark-blue);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  height: auto;
+}
+
 /* Contact form */
 .contact-form input,
 .contact-form textarea {
@@ -245,6 +289,30 @@ tbody tr:hover {
   border-radius: 5px;
 }
 
-.contact-info {
-  margin-top: 20px;
+/* These styles below are from Youp's work in service_list.html, I'm not sure what they are for - Mirthe */
+
+.btn-outline-info {
+  justify-content: center;
+  margin: 10px;
+}
+
+.card {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 6px 10px 6px rgba(230, 0, 126, 0.5); /* Subtle shadow */
+  background-color: rgba(255, 255, 255, 1) !important;
+}
+
+.card-title {
+  color: rgba(48, 123, 191, 1) !important;
+  font: bold;
+}
+
+.card-body {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+#desc {
+  color: rgba(41, 35, 92, 1) !important;
 }
