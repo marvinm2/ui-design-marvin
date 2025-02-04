@@ -24,7 +24,7 @@ html {
 
 /* General Styling */
 body {
-  background-color: var(--blue);
+  background: var(--blue);
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -32,7 +32,7 @@ body {
 }
 
 section {
-  padding-top: 80px; /* Set to the height of your navbar */
+  padding-top: 80px; /* Set to the height of the navbar so scroll links work properly*/
   margin-top: -80px;
 }
 
@@ -43,7 +43,7 @@ h1 {
   border-bottom: 2px solid var(--white);
   padding-bottom: 0px;
   margin-top: 30px;
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 h2 {
@@ -64,6 +64,7 @@ a:hover {
   color: var(--pink);
 }
 
+/* Buttons */
 button {
   background: var(--dark-blue);
   border: none;
@@ -88,7 +89,7 @@ img {
 
 /* Footer */
 footer {
-  background-color: var(--blue);
+  background: var(--blue);
   color: var(--white);
   text-align: center;
   padding: 15px 0;
@@ -97,18 +98,12 @@ footer {
 
 /* Navigation Bar */
 .navbar {
-  background-color: var(--white);
+  background: var(--white);
   position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
   box-shadow: 0 1px 3px var(--dark-blue);
-}
-
-.navbar-nav {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
 }
 
 /* Navbar brand (logo) */
@@ -118,17 +113,17 @@ footer {
 }
 
 /* Navbar links */
-.navbar-nav .nav-link {
-  color: var(--dark-blue);
+.nav-link {
+  color: var(--dark-blue) !important;
 }
 
-.navbar-nav .nav-link:hover {
-  color: var(--pink);
+.nav-link:hover {
+  color: var(--pink) !important;
 }
 
 /* Dropdown Styling */
 .dropdown-menu {
-  background-color: var(--white);
+  background: var(--white);
 }
 
 .dropdown-menu .dropdown-item {
@@ -136,11 +131,11 @@ footer {
 }
 
 .dropdown-menu .dropdown-item:hover {
-  background-color: var(--pink);
+  background: var(--pink);
   color: var(--white);
 }
 
-/* Style for nested dropdown */
+/* Style for nested dropdown (such as Workflow 1) */
 .dropdown-submenu {
   position: relative;
 }
@@ -161,7 +156,6 @@ footer {
 .service-list ul {
   list-style-type: none;
   padding: 0;
-  text-align: left;
 }
 .service-list a {
   color: var(--white);
@@ -178,28 +172,28 @@ footer {
 /* Tables */
 th {
   /* Header */
-  background-color: var(--dark-blue);
+  background: var(--dark-blue);
   color: var(--white);
   text-align: center;
 }
 
 tbody {
   /* Body */
-  background-color: var(--light-blue);
+  background: var(--light-blue);
   font-size: 0.9em;
   color: var(--dark-blue);
 }
 
 table tr:nth-child(odd):not(:hover) {
-  background-color: var(--table-row-light-gray);
+  background: var(--table-row-light-gray);
 }
 
 tbody tr:nth-child(even):not(:hover) {
-  background-color: var(--white);
+  background: var(--white);
 }
 
 tbody tr:hover {
-  background-color: var(--light-blue);
+  background: var(--light-blue);
   cursor: pointer;
 }
 
@@ -215,14 +209,14 @@ tbody tr:hover {
 .qspr-section {
   margin-top: 20px;
   padding-left: 30px;
-  background-color: var(--blue);
+  background: var(--blue);
   display: none;
 }
 
 /* Results Container */
 #results_container {
   display: none;
-  background-color: var(--white);
+  background: var(--white);
   border: 2px solid var(--dark-blue);
   border-radius: 8px;
   box-shadow: 0 4px 8px var(--dark-blue);
