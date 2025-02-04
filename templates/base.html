@@ -116,7 +116,14 @@
             <div class="dropdown-menu" aria-labelledby="caseStudiesDropdown">
               <a class="dropdown-item" href="{{ url_for('kidney_main') }}">Kidney</a>
               <a class="dropdown-item" href="{{ url_for('parkinson_main') }}">Parkinson</a>
-              <a class="dropdown-item" href="{{ url_for('thyroid_main') }}">Thyroid</a>
+
+              <!-- Thyroid Dropdown with Nested Menu -->
+              <div class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="{{ url_for('thyroid_main') }}">Thyroid</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{ url_for('thyroid_workflow_1') }}">Workflow 1</a></li>
+                </ul>
+              </div>
             </div>
           </li>
         </ul>
