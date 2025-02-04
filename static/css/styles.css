@@ -118,7 +118,9 @@ footer {
 }
 
 .nav-link:hover {
-  color: var(--pink) !important;
+  color: var(
+    --pink
+  ) !important; /* @Ozan for the merge conflict, the .btn-outline-info below has been moved to the bottom of the file, it was not removed so it can be removed here for the merge */
 }
 
 /* Dropdown Styling */
@@ -135,7 +137,7 @@ footer {
   color: var(--white);
 }
 
-/* Style for nested dropdown (such as Workflow 1) */
+/* Make the nested dropdown menu appear on hover */
 .dropdown-submenu {
   position: relative;
 }
@@ -157,6 +159,7 @@ footer {
   list-style-type: none;
   padding: 0;
 }
+
 .service-list a {
   color: var(--white);
   font-size: 1.2rem;
@@ -212,6 +215,8 @@ tbody tr:hover {
   background: var(--blue);
   display: none;
 }
+
+/* @Ozan for the merge-conflicts, the .card, .card-title, .card-body and #desc have all been moved to the bottom of the file, they have not been removed from the file so can be removed here for the merge*/
 
 /* Results Container */
 #results_container {
