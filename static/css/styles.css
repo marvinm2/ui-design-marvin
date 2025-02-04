@@ -63,6 +63,19 @@ a:hover {
   color: var(--pink);
 }
 
+button {
+  background: var(--dark-blue);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: var(--pink);
+}
+
 /* Images */
 img {
   display: block;
@@ -219,4 +232,19 @@ tbody tr:hover {
 
 #results_container h2 {
   color: var(--dark-blue);
+}
+
+/* Contact form */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: var(--table-row-light-gray);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.contact-info {
+  margin-top: 20px;
 }
