@@ -207,16 +207,9 @@ footer {
 
 .service-section {
   margin-top: 20px;
-  padding: 20px;
+  padding-left: 30px;
   background-color: var(--blue);
-  border: 2px solid #29235c;
-  border-radius: 8px;
   display: none;
-}
-
-#compound_table {
-  width: 100%;
-  border-collapse: collapse;
 }
 
 #compound_table th,
@@ -248,4 +241,8 @@ footer {
 
 #results_container {
   display: none;
+}
+
+#results_container h2 {
+  color: var(--dark-blue);
 }
