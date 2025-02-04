@@ -8,9 +8,9 @@ Pink: #E6007E
 /* Define color variables */
 :root {
   --dark-blue: #29235c;
-  --blue: #307bbf;
-  --light-blue: #e6e6fa;
   --pink: #e6007e;
+  --blue: #307bbf;
+  --light-blue: #93d5f6;
   --white: #ffffff;
   --table-row-light-gray: #f2f2f2; /* For alternating table row colors */
 }
@@ -203,4 +203,49 @@ footer {
 .service-list a:hover {
   color: var(--pink);
   text-decoration: underline;
+}
+
+.service-section {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--blue);
+  border: 2px solid #29235c;
+  border-radius: 8px;
+  display: none;
+}
+
+#compound_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#compound_table th,
+#compound_table td {
+  text-align: center;
+}
+
+#compound_table th {
+  background-color: #29235c;
+  color: #ffffff;
+}
+
+#compound_table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+#compound_table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+#compound_table tbody tr:hover {
+  background-color: #e6e6fa;
+  cursor: pointer;
+}
+
+#compound_table td:nth-child(3) {
+  font-size: 0.8em;
+}
+
+#results_container {
+  display: none;
 }
