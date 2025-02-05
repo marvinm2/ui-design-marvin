@@ -25,7 +25,8 @@ html {
 /* General Styling */
 body {
   background: var(--blue);
-  font-family: "Open Sans", sans-serif;
+  font-
+  family: "Open Sans", sans-serif;
   font-weight: 400;
   font-style: normal;
   color: var(--white);
@@ -40,6 +41,7 @@ section {
 h1 {
   color: var(--white);
   text-align: center;
+  /* Mirthe's suggestions for the h1 tag have been applied below this line. */
   border-bottom: 2px solid var(--white);
   padding-bottom: 0px;
   margin-top: 30px;
@@ -51,6 +53,11 @@ h2 {
   text-align: left;
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+/* Paragraph Styling */
+p {
+  margin: 10px 0;
 }
 
 /* Links */
@@ -121,6 +128,19 @@ footer {
   color: var(
     --pink
   ) !important; /* @Ozan for the merge conflict, the .btn-outline-info below has been moved to the bottom of the file, it was not removed so it can be removed here for the merge */
+                /* Okay, they are commented out in this part and the options for .btn-outline-info are left to the bottom of this file. */
+
+/* These options are set towards the bottom of the file --see comments just above.   
+.btn-outline-info {
+  justify-content: center;
+  margin: 10px;
+}
+*/
+  
+/* Stylization for the multi-level dropdown button */
+/* Is the options for '.dropdown-menu li' supposed to be commented out? 
+.dropdown-menu li {
+position: relative;
 }
 
 /* Dropdown Styling */
@@ -217,8 +237,50 @@ tbody tr:hover {
 }
 
 /* @Ozan for the merge-conflicts, the .card, .card-title, .card-body and #desc have all been moved to the bottom of the file, they have not been removed from the file so can be removed here for the merge*/
-
+/* Okay, I'll comment them out in the part just below, so their options will be set at the bottom. */
+/* The ones just below might be the ones set by Youp for the 'service list' page; if so, he/we may want to check these later to choose one of the set of options. */
 /* Results Container */
+.p {
+  justify-content: center;
+}
+
+/* Commented out here as the options for .card, .card-title, .card-body and #desc are set up at the bottom of this file. See comments above for more details. */
+/*
+  .card {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 6px 10px 6px rgba(230, 0, 126, 0.5);
+  background-color: rgba(255, 255, 255, 1) !important;
+}
+
+.card-title {
+  color: rgba(48, 123, 191, 1) !important;
+  font: bold;
+}
+
+.card-body {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+#desc {
+  color: rgba(41, 35, 92, 1) !important;
+}
+*/ 
+
+/* Nice table styling */
+/* Styling the results table container */
+/* Ensure the results table is responsive */
+#select-services {
+  background-color: #ffffff; /* Solid white background */
+  border: 2px solid #29235c; /* Dark blue border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px; /* Padding around the container */
+  margin-top: 20px; /* Space above the table */
+  overflow-x: auto; /* Enable horizontal scrolling for wide tables */
+}
+
 #results_container {
   display: none;
   background: var(--white);
@@ -271,6 +333,9 @@ tbody tr:hover {
   max-width: auto;
   object-fit: contain;
   border-radius: 10px;
+
+#results_table th {
+  background-color: #29235c; /* Dark blue header background */
 }
 
 .swiper-button-next,
@@ -295,6 +360,7 @@ tbody tr:hover {
 }
 
 /* These styles below are from Youp's work in service_list.html, I'm not sure what they are for - Mirthe */
+/* I think these are from him integrating cards to the 'service list' page. I think he had not started to work on these before you created your branch/fork. */
 
 .btn-outline-info {
   justify-content: center;
