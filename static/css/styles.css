@@ -248,25 +248,31 @@ tbody tr:hover {
   padding: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
 }
+
 .swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 200px;
-}
-.swiper-slide img {
-  height: auto;
-  width: auto;
-  display: block;
+  background: white;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  height: 175px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.swiper-slide img:hover {
+
+.swiper-slide:hover {
   transform: scale(1.05);
 }
+
+.swiper-slide img {
+  max-height: 100%;
+  max-width: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
 .swiper-button-next,
 .swiper-button-prev {
   color: var(--dark-blue);
