@@ -1,22 +1,27 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <!-- Include DataTables CSS and JS -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"
+/>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 
-<h1>Thyroid Case Demo Workflow for the Hackthon</h1>
-<br>
+<h1>Thyroid Case Demo Workflow for the Hackathon</h1>
+<br />
 
 <div class="container">
   <section>
-      <p>Select compounds from the table:</p>
+      <h2>1. Select compounds from the table:</h2>
+      <!--- <p>Select compounds from the table:</p> ---> 
       <table class="table table-bordered table-striped" id="compound_table"> 
           <thead>
               <tr>
@@ -31,7 +36,8 @@
       </table>
       <!-- Service Selection Section -->
       <div id="select-services" class="container">
-        <p>Select services to run:</p>
+      <h2>2. Select services to run:</h2>
+      <!--- <p>Select services to run:</p> ---> 
         <div id="service_selection">
             <label>
                 <input type="checkbox" class="service-checkbox" value="QSPR" id="qspr_checkbox">
@@ -44,297 +50,157 @@
             </label>
         </div>
       </div>
+    </div>
 
-      <!-- QSPR Section -->
-      <div id="qspr_section" style="margin-top: 20px; padding: 20px; background-color: #ffffff; border: 2px solid #29235c; border-radius: 8px;">
-        <h3>QSPR Service</h3>
-
-        <!-- Model Selection -->
-        <p>Select models to use:</p>
-        <div id="model_selection">
-            <label><input type="checkbox" class="model-checkbox" value="P10827_RF_Model"> P10827_RF_Model</label><br>
-            <label><input type="checkbox" class="model-checkbox" value="P10828_RF_Model"> P10828_RF_Model</label><br>
-        </div>
-
-        <!-- Run Button -->
-        <button id="run_model" class="btn btn-success" style="margin-top: 20px;">Run QSAR Model</button>
-
-        <!-- Results Section -->
-        <p>Model Results:</p>
-        <div class="container" id="results_container">
-            <table class="table table-bordered table-striped" id="results_table">
-                <thead>
-                    <tr id="results_table_header">
-                        <th>SMILES</th>
-                        <!-- Model columns will be added dynamically here -->
-                    </tr>
-                </thead>
-                <tbody id="results_table_body">
-                    <!-- Results will be dynamically added here -->
-                </tbody>
-            </table>
-        </div>
+    <!-- QSPR Section -->
+    <div id="qspr_section" class="qspr-section">
+      <h2>3. Select models to use from QSPR Service:</h2>
+      <div id="model_selection">
+        <label
+          ><input
+            type="checkbox"
+            class="model-checkbox"
+            value="P10827_RF_Model"
+          />
+          P10827_RF_Model</label
+        ><br />
+        <label
+          ><input
+            type="checkbox"
+            class="model-checkbox"
+            value="P10828_RF_Model"
+          />
+          P10828_RF_Model</label
+        >
       </div>
-
-      <!-- SOMpredictor Section -->
-      <div id="sompredictor_section" style="margin-top: 20px; padding: 20px; background-color: #ffffff; border: 2px solid #29235c; border-radius: 8px;">
-        <h3>SOMpredictor Service</h3>
-        <p>Additional fields for SOMpredictor service will be added later.</p>
+      <p><button id="run_model" class="btn btn-success">Run QSAR Model</button></p>
+      <div class="container" id="results_container">
+        <h2>Model Results:</h2>
+        <table class="table table-bordered table-striped" id="results_table">
+          <thead>
+            <tr id="results_table_header">
+              <th>SMILES</th>
+            </tr>
+          </thead>
+          <tbody id="results_table_body"></tbody>
+        </table>
       </div>
+    </div>
 
+    <!-- SOMpredictor Section -->
+    <div id="sompredictor_section" class="qspr-section">
+      <h2>SOMpredictor Service</h2>
+      <p>Additional fields for SOMpredictor service will be added later.</p>
+    </div>
   </section>
 </div>
 
-<style>
-  /* Compound Table */
-#compound_table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-}
-
-#compound_table th,
-#compound_table td {
-    border: 1px solid #dee2e6;
-    padding: 8px;
-    text-align: center;
-}
-
-#compound_table th {
-    background-color: #29235c; /* Dark blue for headers */
-    color: #ffffff; /* White text */
-}
-
-#compound_table tbody tr:nth-child(odd) {
-    background-color: #f9f9f9;
-}
-
-#compound_table tbody tr:nth-child(even) {
-    background-color: #ffffff;
-}
-
-#compound_table tbody tr:hover {
-    background-color: #e6e6fa;
-    cursor: pointer;
-}
-
-.compound-checkbox {
-      margin-left: 10px; /* Center checkboxes */
-  }
-  /* Make SMILES strings smaller */
-  #compound_table td:nth-child(3) {
-      font-size: 0.8em; /* Reduce font size for SMILES column */
-  }
-
-  /* Results styling */
-  pre#results_output {
-      max-height: 200px;
-      white-space: pre-wrap;
-  }
-  
-  /* Hide initially hidden sections */
-  #qspr_section,
-  #sompredictor_section,
-  #results_container {
-      display: none;
-  }
-</style>
-
-
-
-
-<!--- Below is the part for getting a table with tick marks
 <script>
   $(document).ready(function () {
-    // Fetch KE options and populate KE dropdown sorted by KE Label
-    $.getJSON("/get_dummy_data")
-      .done(function (data) {
-
-        // Populate KE ID dropdown
-        const table = $("#table_id");
-        table.empty();
-        data.forEach((option) => {
-          table.append(
-            `<option value="${option.Compound}" data-title="${option.SMILES}">${option.Compound} - ${option.SMILES}</option>`,
-            `<option value="${option.KElabel}" data-title="${option.KEtitle}">${option.KElabel} - ${option.KEtitle}</option>`,
-          );
-        });
-      })
-      .fail(function () {
-        console.error("Failed to load KE options"); // Debug log
-        $("#message").text("Failed to load Key Events").css("color", "red");
-      });
-    });
-</script>
----> 
-
-
-<script>
-  // Fetch the list of compounds with their SMILES from the server
-  $.getJSON("/get_compounds", function (data) {
-      console.log(data); // Debug log
+    // Fetch and populate the compound table
+    $.getJSON("/get_compounds", function (data) {
       const tableBody = $("#compound_table tbody");
       tableBody.empty();
-      data.forEach((option, index) => {
-          tableBody.append(`
-              <tr>
-                  <td><input type="checkbox" class="compound-checkbox" data-term="${option.Term}" data-smiles="${option.SMILES}"></td>
-                  <td>${option.Term}</td>
-                  <td>${option.SMILES}</td>
-              </tr>
-          `);
+      data.forEach((option) => {
+        tableBody.append(`
+                  <tr>
+                      <td><input type="checkbox" class="compound-checkbox" data-term="${option.Term}" data-smiles="${option.SMILES}"></td>
+                      <td>${option.Term}</td>
+                      <td>${option.SMILES}</td>
+                  </tr>
+              `);
       });
-  });
-
-  // Listen for changes in checkbox selection and update the selected list
-  $("#submit_selection").on("click", function () {
-      const selectedCompounds = [];
-      $(".compound-checkbox:checked").each(function () {
-          const term = $(this).data("term");
-          const smiles = $(this).data("smiles");
-          selectedCompounds.push(`${term}: ${smiles}`);
-      });
-      
-      const selectedText = selectedCompounds.length > 0 ? selectedCompounds.join(", ") : "None";
-      console.log("Selected compounds:", selectedText); // Debug log
-      $("#selected_info").text(selectedText);
-  });
-
-  // Show or hide service sections based on user selection
-  $(".service-checkbox").on("change", function () {
-      const isChecked = $(this).is(":checked");
-      const service = $(this).val();
-
-      if (service === "QSPR") {
-          $("#qspr_section").toggle(isChecked);
-      } else if (service === "SOMpredictor") {
-          $("#sompredictor_section").toggle(isChecked);
-      }
-  });
-
-  // Initialize the checkboxes to ensure sections are hidden initially
-  $(document).ready(function () {
-      $("#qspr_section").hide();
-      $("#sompredictor_section").hide();
-  });
-
-
-  // Handle the "Run" button click
-  $("#run_model").on("click", function () {
-    // Collect selected SMILES strings
-    const selectedSMILES = [];
-    $(".compound-checkbox:checked").each(function () {
-        const smiles = $(this).data("smiles");
-        selectedSMILES.push(smiles);
     });
 
-    // Collect selected models
-    const selectedModels = [];
-    $(".model-checkbox:checked").each(function () {
-        const model = $(this).val();
-        selectedModels.push(model);
+    // Show or hide service sections
+    $(".service-checkbox").on("change", function () {
+      $("#" + $(this).val().toLowerCase() + "_section").toggle(this.checked);
     });
 
-    // Check if there is at least one SMILES and one model selected
-    if (selectedSMILES.length === 0 || selectedModels.length === 0) {
+    // Run Model Button Click
+    $("#run_model").on("click", function () {
+      const selectedSMILES = $(".compound-checkbox:checked")
+        .map(function () {
+          return $(this).data("smiles");
+        })
+        .get();
+
+      const selectedModels = $(".model-checkbox:checked")
+        .map(function () {
+          return $(this).val();
+        })
+        .get();
+
+      if (selectedSMILES.length === 0 || selectedModels.length === 0) {
         alert("Please select at least one compound and one model.");
         return;
-    }
+      }
 
-    // Prepare the request payload
-    const payload = {
+      const payload = {
         smiles: selectedSMILES,
         models: selectedModels,
-        format: "text" // API returns plain text
-    };
+        format: "text",
+      };
 
-    console.log("Payload:", payload); // Debug log
-
-    // Send the POST request to the /api endpoint
-    // fetch("http://localhost:5000/api", {
-    fetch("https://qsprpred.cloud.vhp4safety.nl/api", {
+      fetch("https://qsprpred.cloud.vhp4safety.nl/api", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`API call failed with status: ${response.status}`);
-            }
-            return response.text();
-        })
-        .then(data => {
-            console.log("API response:", data); // Debug log
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          const resultsTableHeader = $("#results_table_header");
+          const resultsTableBody = $("#results_table_body");
 
-            const resultsTableHeader = $("#results_table_header");
-            const resultsTableBody = $("#results_table_body");
+          resultsTableHeader.find("th").not(":first").remove();
+          resultsTableBody.empty();
 
-            // Clear previous results
-            resultsTableHeader.find("th").not(":first").remove(); // Keep only the SMILES header
-            resultsTableBody.empty();
+          selectedModels.forEach((model) => {
+            resultsTableHeader.append(`<th>${model}</th>`);
+          });
 
-            // Add dynamic model headers
-            selectedModels.forEach(model => {
-                resultsTableHeader.append(`<th>${model}</th>`);
-            });
+          const results = {};
+          data.split("\n").forEach((line) => {
+            const match = line.match(/SMILES:\s(.+?)\s->\s(.+)/);
+            if (match) {
+              const smiles = match[1];
+              const predictions = match[2];
 
-            // Split the response into lines
-            const lines = data.split("\n").filter(line => line.trim() !== "");
-            const results = {};
+              if (!results[smiles]) results[smiles] = {};
 
-            // Parse the response and organize it by SMILES
-            lines.forEach(line => {
-                // Match SMILES and multiple model predictions
-                const match = line.match(/SMILES:\s(.+?)\s->\s(.+)/);
-                if (match) {
-                    const smiles = match[1];
-                    const predictions = match[2];
-
-                    if (!results[smiles]) {
-                        results[smiles] = {};
-                    }
-
-                    // Split the predictions by commas and extract each model-prediction pair
-                    predictions.split(",").forEach(prediction => {
-                        const predictionMatch = prediction.match(/prediction\s\((.+?)\):\s(.+)/);
-                        if (predictionMatch) {
-                            const model = predictionMatch[1];
-                            const value = predictionMatch[2];
-                            results[smiles][model] = value;
-                        }
-                    });
+              predictions.split(",").forEach((prediction) => {
+                const predictionMatch = prediction.match(
+                  /prediction\s\((.+?)\):\s(.+)/
+                );
+                if (predictionMatch) {
+                  results[smiles][predictionMatch[1]] = predictionMatch[2];
                 }
-            });
+              });
+            }
+          });
 
-            // Populate the table rows
-            Object.keys(results).forEach(smiles => {
-                const row = [`<td>${smiles}</td>`];
-                selectedModels.forEach(model => {
-                    const prediction = results[smiles][model] || "N/A"; // Show "N/A" if no prediction is available
-                    row.push(`<td>${prediction}</td>`);
-                });
-                resultsTableBody.append(`<tr>${row.join("")}</tr>`);
+          Object.keys(results).forEach((smiles) => {
+            const row = [`<td>${smiles}</td>`];
+            selectedModels.forEach((model) => {
+              row.push(`<td>${results[smiles][model] || "N/A"}</td>`);
             });
+            resultsTableBody.append(`<tr>${row.join("")}</tr>`);
+          });
 
-            // Show the table and initialize DataTables
-            $("#results_container").show();
-
-            // Initialize DataTables
-            $("#results_table").DataTable({
-                destroy: true, // Reinitialize on each new dataset
-                dom: "Bfrtip",
-                buttons: ["csvHtml5", "excelHtml5"],
-                order: [[0, "asc"]], // Order by the first column by default
-            });
+          $("#results_container").show();
+          $("#results_table").DataTable({
+            destroy: true,
+            dom: "Bfrtip",
+            buttons: ["csvHtml5", "excelHtml5"],
+            order: [[0, "asc"]],
+          });
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("An error occurred while fetching results: " + error.message);
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("An error occurred while fetching results: " + error.message);
         });
-});
-
+    });
+  });
 </script>
 
 {% endblock %}

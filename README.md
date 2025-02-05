@@ -1,8 +1,8 @@
 # ui-design
 
-Repository to develop the main HTML-based website as central access point. 
+Repository to develop the main HTML-based website as central access point.
 
-## Requirements 
+## Requirements
 
 The user needs to install the from `flask`, `requests`, and `wikidataintegrator` Python modules. You can do so by running
 
@@ -16,14 +16,14 @@ Deployment can be made in two ways: i) on the local machine with Python; ii) on 
 
 ### Deployment with Python
 
-Run the following command in Bash: 
+Run the following commands in Bash:
 
 ```
+python patch.py
 python app.py
 ```
 
-The page should be available at `http://localhost:5000/`. 
-
+The page should be available at `http://localhost:5000/`.
 
 ### Deployment with Docker
 
@@ -32,6 +32,6 @@ Run the following codes for building the image and running the container
 ```
 docker build -t cap_demo .
 docker run -d -p 5001:5000 cap_demo
-``` 
+```
 
-The page should be available at `http://localhost:5001/`. 
+The page should be available at `http://localhost:5001/`.
