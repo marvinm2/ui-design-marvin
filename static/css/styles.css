@@ -25,8 +25,7 @@ html {
 /* General Styling */
 body {
   background: var(--blue);
-  font-
-  family: "Open Sans", sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 400;
   font-style: normal;
   color: var(--white);
@@ -125,10 +124,11 @@ footer {
 }
 
 .nav-link:hover {
-  color: var(
-    --pink
-  ) !important; /* @Ozan for the merge conflict, the .btn-outline-info below has been moved to the bottom of the file, it was not removed so it can be removed here for the merge */
-                /* Okay, they are commented out in this part and the options for .btn-outline-info are left to the bottom of this file. */
+  color: var(--pink) !important;
+}
+
+/* @Ozan for the merge conflict, the .btn-outline-info below has been moved to the bottom of the file, it was not removed so it can be removed here for the merge */
+/* Okay, they are commented out in this part and the options for .btn-outline-info are left to the bottom of this file. */
 
 /* These options are set towards the bottom of the file --see comments just above.   
 .btn-outline-info {
@@ -136,7 +136,7 @@ footer {
   margin: 10px;
 }
 */
-  
+
 /* Stylization for the multi-level dropdown button */
 /* Is the options for '.dropdown-menu li' supposed to be commented out? 
 .dropdown-menu li {
@@ -266,7 +266,7 @@ tbody tr:hover {
 #desc {
   color: rgba(41, 35, 92, 1) !important;
 }
-*/ 
+*/
 
 /* Nice table styling */
 /* Styling the results table container */
@@ -306,6 +306,7 @@ tbody tr:hover {
   position: relative;
   overflow: hidden;
 }
+
 .swiper-wrapper {
   padding: 20px;
   display: flex;
@@ -333,6 +334,7 @@ tbody tr:hover {
   max-width: auto;
   object-fit: contain;
   border-radius: 10px;
+}
 
 #results_table th {
   background-color: #29235c; /* Dark blue header background */
