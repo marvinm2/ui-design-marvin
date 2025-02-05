@@ -268,19 +268,19 @@ tbody tr:hover {
 }
 */
 
-/* Nice table styling */
-/* Styling the results table container */
 /* Ensure the results table is responsive */
+/* Commenting this out as it makes the workflow unreadable, not sure if it is used anywhere else
 #select-services {
-  background-color: #ffffff; /* Solid white background */
-  border: 2px solid #29235c; /* Dark blue border */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  padding: 20px; /* Padding around the container */
-  margin-top: 20px; /* Space above the table */
-  overflow-x: auto; /* Enable horizontal scrolling for wide tables */
-}
+  background-color: #ffffff; 
+  border: 2px solid #29235c; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  padding: 20px; 
+  margin-top: 20px; 
+  overflow-x: auto;
+} */
 
+/* Styling the results table container */
 #results_container {
   display: none;
   background: var(--white);
