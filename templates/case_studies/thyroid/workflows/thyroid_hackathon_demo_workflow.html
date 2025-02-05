@@ -1,14 +1,9 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 
 <!-- Include DataTables CSS and JS -->
-<link
-  rel="stylesheet"
-  href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
-/>
-<link
-  rel="stylesheet"
-  href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"
-/>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
@@ -21,7 +16,6 @@
 <div class="container">
   <section>
       <h2>1. Select compounds from the table:</h2>
-      <!--- <p>Select compounds from the table:</p> ---> 
       <table class="table table-bordered table-striped" id="compound_table"> 
           <thead>
               <tr>
@@ -34,65 +28,58 @@
               <!-- Rows will be dynamically populated -->
           </tbody>
       </table>
+      <!-- The toggle button for the compound table will be inserted here if needed -->
+
       <!-- Service Selection Section -->
       <div id="select-services" class="container">
-      <h2>2. Select services to run:</h2>
-      <!--- <p>Select services to run:</p> ---> 
+        <h2>2. Select services to run:</h2>
         <div id="service_selection">
-            <label>
-                <input type="checkbox" class="service-checkbox" value="QSPR" id="qspr_checkbox">
-                QSPR
-            </label>
-            <br>
-            <label>
-                <input type="checkbox" class="service-checkbox" value="SOMpredictor" id="sompredictor_checkbox">
-                SOMpredictor
-            </label>
+          <label class="service-tile" for="qspr_checkbox">
+            <input type="checkbox" class="service-checkbox" value="QSPR" id="qspr_checkbox">
+            <strong>QSPR</strong>
+            <p class="service-desc">Placeholder description for QSPR service.</p>
+          </label>
+          <label class="service-tile" for="sompredictor_checkbox">
+            <input type="checkbox" class="service-checkbox" value="SOMpredictor" id="sompredictor_checkbox">
+            <strong>SOMpredictor</strong>
+            <p class="service-desc">Placeholder description for SOMpredictor service.</p>
+          </label>
         </div>
       </div>
-    </div>
-
-    <!-- QSPR Section -->
-    <div id="qspr_section" class="qspr-section">
-      <h2>3. Select models to use from QSPR Service:</h2>
-      <div id="model_selection">
-        <label
-          ><input
-            type="checkbox"
-            class="model-checkbox"
-            value="P10827_RF_Model"
-          />
-          P10827_RF_Model</label
-        ><br />
-        <label
-          ><input
-            type="checkbox"
-            class="model-checkbox"
-            value="P10828_RF_Model"
-          />
-          P10828_RF_Model</label
-        >
-      </div>
-      <p><button id="run_model" class="btn btn-success">Run QSAR Model</button></p>
-      <div class="container" id="results_container">
-        <h2>Model Results:</h2>
-        <table class="table table-bordered table-striped" id="results_table">
-          <thead>
-            <tr id="results_table_header">
-              <th>SMILES</th>
-            </tr>
-          </thead>
-          <tbody id="results_table_body"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- SOMpredictor Section -->
-    <div id="sompredictor_section" class="qspr-section">
-      <h2>SOMpredictor Service</h2>
-      <p>Additional fields for SOMpredictor service will be added later.</p>
-    </div>
   </section>
+</div>
+
+<!-- QSPR Section -->
+<div id="qspr_section" class="qspr-section">
+  <h2>3. Select models to use from QSPR Service:</h2>
+  <div id="model_selection">
+    <label>
+      <input type="checkbox" class="model-checkbox" value="P10827_RF_Model" />
+      P10827_RF_Model
+    </label><br />
+    <label>
+      <input type="checkbox" class="model-checkbox" value="P10828_RF_Model" />
+      P10828_RF_Model
+    </label>
+  </div>
+  <p><button id="run_model" class="btn btn-success">Run QSAR Model</button></p>
+  <div class="container" id="results_container">
+    <h2>Model Results:</h2>
+    <table class="table table-bordered table-striped" id="results_table">
+      <thead>
+        <tr id="results_table_header">
+          <th>SMILES</th>
+        </tr>
+      </thead>
+      <tbody id="results_table_body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SOMpredictor Section -->
+<div id="sompredictor_section" class="qspr-section">
+  <h2>SOMpredictor Service</h2>
+  <p>Additional fields for SOMpredictor service will be added later.</p>
 </div>
 
 <script>
@@ -103,16 +90,33 @@
       tableBody.empty();
       data.forEach((option) => {
         tableBody.append(`
-                  <tr>
-                      <td><input type="checkbox" class="compound-checkbox" data-term="${option.Term}" data-smiles="${option.SMILES}"></td>
-                      <td>${option.Term}</td>
-                      <td>${option.SMILES}</td>
-                  </tr>
-              `);
+          <tr>
+              <td><input type="checkbox" class="compound-checkbox" data-term="${option.Term}" data-smiles="${option.SMILES}"></td>
+              <td>${option.Term}</td>
+              <td>${option.SMILES}</td>
+          </tr>
+        `);
       });
+      
+      // Limit display to only the first 5 rows and add a toggle button if needed
+      const rows = $("#compound_table tbody tr");
+      if (rows.length > 5) {
+        rows.filter(":gt(4)").hide();
+        $("#compound_table").after('<button id="toggle_compound_table" class="btn btn-primary">Show More</button>');
+        $("#toggle_compound_table").on("click", function () {
+          const hiddenRows = $("#compound_table tbody tr:gt(4)");
+          if (hiddenRows.is(":visible")) {
+            hiddenRows.slideUp();
+            $(this).text("Show more compounds");
+          } else {
+            hiddenRows.slideDown();
+            $(this).text("Show less compounds");
+          }
+        });
+      }
     });
 
-    // Show or hide service sections
+    // Show or hide service sections when a service tile is toggled
     $(".service-checkbox").on("change", function () {
       $("#" + $(this).val().toLowerCase() + "_section").toggle(this.checked);
     });
@@ -120,15 +124,10 @@
     // Run Model Button Click
     $("#run_model").on("click", function () {
       const selectedSMILES = $(".compound-checkbox:checked")
-        .map(function () {
-          return $(this).data("smiles");
-        })
+        .map(function () { return $(this).data("smiles"); })
         .get();
-
       const selectedModels = $(".model-checkbox:checked")
-        .map(function () {
-          return $(this).val();
-        })
+        .map(function () { return $(this).val(); })
         .get();
 
       if (selectedSMILES.length === 0 || selectedModels.length === 0) {
@@ -165,13 +164,9 @@
             if (match) {
               const smiles = match[1];
               const predictions = match[2];
-
               if (!results[smiles]) results[smiles] = {};
-
               predictions.split(",").forEach((prediction) => {
-                const predictionMatch = prediction.match(
-                  /prediction\s\((.+?)\):\s(.+)/
-                );
+                const predictionMatch = prediction.match(/prediction\s\((.+?)\):\s(.+)/);
                 if (predictionMatch) {
                   results[smiles][predictionMatch[1]] = predictionMatch[2];
                 }
