@@ -132,6 +132,7 @@ def service_list():
 @app.route('/templates/services/qsprpred')
 def qsprpred():
     return render_template('services/qsprpred.html')
+    
 ################################################################################
 
 ################################################################################
@@ -152,6 +153,10 @@ def thyroid_main():
 @app.route('/templates/case_studies/thyroid/workflows/thyroid_hackathon_demo_workflow')
 def thyroid_workflow_1():
     return render_template('case_studies/thyroid/workflows/thyroid_hackathon_demo_workflow.html')
+@app.route('/templates/case_studies/thyroid/workflows/ngra_silymarin')
+def ngra_silymarin():
+    return render_template('case_studies/thyroid/workflows/ngra_silymarin.html')
+
 ################################################################################
 
 
