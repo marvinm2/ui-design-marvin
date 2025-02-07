@@ -4,6 +4,8 @@
 from flask import Flask, request, jsonify, render_template, send_file
 import requests
 from wikidataintegrator import wdi_core
+import json
+import re
 ################################################################################
 
 
@@ -216,6 +218,88 @@ def get_compounds():
         compound_list.append({"Term": row[2], "SMILES": row[0]})
 
     return jsonify(compound_list), 200
+
+@app.route('/get_compounds_parkinson', methods=['GET'])
+def get_compounds_parkinson():
+    # Setting up the url for sparql endpoint.
+    compoundwikiEP = "https://compoundcloud.wikibase.cloud/query/sparql"
+
+    # Setting up the sparql query for the full list of compounds.
+    sparqlquery_full = '''
+    PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
+    PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
+
+    SELECT DISTINCT (substr(str(?cmp), 45) as ?ID) (?cmpLabel AS ?Term)
+        ?SMILES (?cmp AS ?ref)
+    WHERE{
+        { ?parent wdt:P21 wd:Q5050 ; wdt:P29 ?cmp . } UNION { ?cmp wdt:P21 wd:Q5050 . }
+    ?cmp wdt:P1 ?type ; rdfs:label ?cmpLabel . FILTER(lang(?cmpLabel) = 'en')
+    ?type rdfs:label ?typeLabel . FILTER(lang(?typeLabel) = 'en')
+    OPTIONAL { ?cmp wdt:P7 ?chiralSMILES }
+    OPTIONAL { ?cmp wdt:P12 ?nonchiralSMILES }
+    BIND (COALESCE(IF(BOUND(?chiralSMILES), ?chiralSMILES, 1/0), IF(BOUND(?nonchiralSMILES), ?nonchiralSMILES, 1/0),"") AS ?SMILES)
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    }
+    '''
+
+     # Making the SPARQL query
+    compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery_full, endpoint=compoundwikiEP, as_dataframe=True)
+
+    # Organizing the output into a list of dictionaries
+    compound_list = []
+    for _, row in compound_dat.iterrows():
+        compound_list.append({"Term": row[2], "SMILES": row[0]})
+
+    return jsonify(compound_list), 200
+
+
+def fetch_predictions(smiles, models, metadata, threshold=6.5):
+    url = "https://qsprpred.cloud.vhp4safety.nl/api"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:135.0) Gecko/20100101 Firefox/135.0",
+        "Accept": "*/*",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Content-Type": "application/json",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "cross-site",
+        "Priority": "u=0",
+    }
+    body = {
+        "smiles": smiles,
+        "models": models,
+        "format": "json"
+    }
+    response = requests.post(url, headers=headers, data=json.dumps(body))
+    if response.status_code == 200:
+        predictions = response.json()
+        filtered_predictions = []
+        for prediction in predictions:
+            filtered_prediction = {"smiles": prediction["smiles"]}
+            for key, value in prediction.items():
+                if key != "smiles" and float(value) >= threshold:
+                    new_key = re.sub(r'prediction \((.+)\)', r'\1', key)
+                    filtered_prediction[new_key] = value
+            filtered_predictions.append(filtered_prediction)
+            # Ensure metadata exists for the model before updating
+            if models and models[0] in metadata:
+                filtered_prediction.update(metadata.get(models[0], {}))
+        print(f"{len(filtered_predictions)} result(s)")
+        return filtered_predictions
+    else:
+        return {"error": response.text}
+    
+@app.route("/get_predictions", methods=["POST"])
+def get_predictions():
+    data = request.json
+    smiles = data.get("smiles", [])
+    models = data.get("models", [])
+    metadata = data.get("metadata", {})
+    threshold = data.get("threshold", 6.5)
+
+    results = fetch_predictions(smiles, models, metadata, threshold)
+    return jsonify(results)
+
 
 ################################################################################
 

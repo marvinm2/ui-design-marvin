@@ -1,10 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <h1>Parkinson Case Demo Workflow (Hackathon PS3)</h1>
 <br />
 
-<div id="cy" style="width: 80vh; height: 80vh"></div>
+
+
+<div class="container">
+    <section>
+        <h2>1. Chemicals</h2>
+        <table class="table table-bordered table-striped" id="compound_table"> 
+            <thead>
+                <tr>
+                    <th>Compound</th>
+                    <th>SMILES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically populated -->
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h2>2. Adverse Outcome Pathways</h2>
+        <div id="cy" style="width: 80vh; height: 80vh"></div>
 
 <script>
 window.addEventListener('DOMContentLoaded', function(){
@@ -52,6 +73,92 @@ data = [
 				});
 			});
 		</script>
+    </section>
+    <section>
+        <h2>2. Fetch Predictions</h2>
+        <button id="fetch_predictions" class="btn btn-primary">Get Predictions</button>
+        <table class="table table-bordered table-striped mt-3" id="predictions_table">
+            <thead>
+                <tr>
+                    <th>SMILES</th>
+                    <th>Model</th>
+                    <th>Prediction Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Predictions will be inserted here -->
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+      // Fetch and populate the compound table
+      $.getJSON("/get_compounds_parkinson", function (data) {
+        const tableBody = $("#compound_table tbody");
+        tableBody.empty();
+        data.forEach((option) => {
+          tableBody.append(`
+            <tr>
+                <td>${option.Term}</td>
+                <td>${option.SMILES}</td>
+            </tr>
+          `);
+        });
+      });
+
+      // Fetch Predictions
+      $("#fetch_predictions").on("click", function () {
+            const smilesList = [];
+            $("#compound_table tbody tr").each(function () {
+                const smiles = $(this).find("td:eq(1)").text().trim();
+                if (smiles) {
+                    smilesList.push(smiles);
+                }
+            });
+
+            const requestData = {
+                smiles: smilesList,
+                models: ["P10827_RF_Model",
+    "P10828_RF_Model","P31644_RF_Model",
+    "P41594_Allosteric_RF_Model",
+    "P41594_Orthosteric_RF_Model",
+    "Q13224_RF_Model",
+    "Q13255_Allosteric_RF_Model"],  // Modify this based on available models
+                metadata: {},
+                threshold: 6.5
+            };
+
+            $.ajax({
+                url: "/get_predictions",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(requestData),
+                success: function (response) {
+                    const tableBody = $("#predictions_table tbody");
+                    tableBody.empty();
+                    response.forEach((prediction) => {
+                        Object.entries(prediction).forEach(([model, value]) => {
+                            if (model !== "smiles") {
+                                tableBody.append(`
+                                    <tr>
+                                        <td>${prediction.smiles}</td>
+                                        <td>${model}</td>
+                                        <td>${value}</td>
+                                    </tr>
+                                `);
+                            }
+                        });
+                    });
+                },
+                error: function () {
+                    alert("Error fetching predictions.");
+                }
+            });
+        });
+    });
 </script>
+
 
 {% endblock %}
