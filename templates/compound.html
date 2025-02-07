@@ -7,6 +7,8 @@
 
 <h2>Basic info</h2>
 
+<p>As given in the VHP4Safety Compound Wiki.</p>
+
         <table class="table table-bordered table-striped" id="info_table"> 
             <thead>
                 <tr>
@@ -19,6 +21,10 @@
 
 
 <h2>3D structure</h2>
+
+<p>Based on the SMILES in the VHP4Safety Compound Wiki.</p>
+
+<span id="mydiv"></span>
 
 <script>
   var jmolApplet0; // set up in HTML table, below
@@ -61,11 +67,38 @@
         });
     });
 
+    $.getJSON("/get_compound_expdata/{{ cwid }}", function (data) {
+        console.log(data)
+        const tableBody = $("#expdata_table tbody");
+        tableBody.empty();
+        data.forEach((option) => {
+            tableBody.append(`
+                <tr>
+                    <td>${option.propEntityLabel}</td>
+                    <td>${option.value}</td>
+                    <td>${option.unitsLabel}</td>
+                    <td>${option.source}</td>
+                    <td>${option.doi}</td>
+                </tr>
+            `);
+        });
+    });
       
   })
   
 </script>
 
-<span id="mydiv"></span>
+<h2>Experimental data</h2>
+
+        <table class="table table-bordered table-striped" id="expdata_table"> 
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
 
 {% endblock %}

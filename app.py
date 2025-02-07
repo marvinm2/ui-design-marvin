@@ -281,6 +281,62 @@ WHERE {
 
     return jsonify(compound_list), 200
 
+@app.route('/get_compound_expdata/<cwid>')
+def show_compounds_expdata_as_json(cwid):
+    # Setting up the url for sparql endpoint.
+    compoundwikiEP = "https://compoundcloud.wikibase.cloud/query/sparql"
+
+    sparqlquery = '''
+PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
+PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
+PREFIX wid: <http://www.wikidata.org/entity/>
+PREFIX widt: <http://www.wikidata.org/prop/direct/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?propEntityLabel ?value ?unitsLabel ?source ?doi
+WHERE {
+  wd:P5 wikibase:directClaim ?identifierProp .
+  wd:''' + cwid + ''' ?identifierProp ?wikidata .
+  BIND (iri(CONCAT("http://www.wikidata.org/entity/", ?wikidata)) AS ?qid)
+  SERVICE <https://query.wikidata.org/sparql> {
+    ?qid ?propp ?statement .
+    ?statement a wikibase:BestRank ;
+      ?proppsv [
+        wikibase:quantityAmount ?value ;
+        wikibase:quantityUnit ?units
+      ] .
+    OPTIONAL {
+      ?statement prov:wasDerivedFrom/pr:P248 ?source .
+      OPTIONAL { ?source wdt:P356 ?doi . }
+    }
+    ?property wikibase:claim ?propp ;
+            wikibase:statementValue ?proppsv ;
+            widt:P1629 ?propEntity ;
+            widt:P31 wid:Q21077852 .
+    ?propEntity rdfs:label ?propEntityLabel .
+    FILTER ( lang(?propEntityLabel) = 'en' )
+    ?units rdfs:label ?unitsLabel .
+    FILTER ( lang(?unitsLabel) = 'en' )
+    BIND (COALESCE(IF(BOUND(?source), ?source, 1/0), "") AS ?source)
+    BIND (COALESCE(IF(BOUND(?doi), ?doi, 1/0), "") AS ?doi)
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}      '''
+    print(sparqlquery + "\n")
+
+    compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery, endpoint=compoundwikiEP, as_dataframe=True)
+
+    compound_list = []
+    compound_list.append({
+      "propEntityLabel": compound_dat.at[0, "propEntityLabel"],
+      "value": compound_dat.at[0, "value"],
+      "unitsLabel": compound_dat.at[0, "unitsLabel"],
+      "source": compound_dat.at[0, "source"],
+      "doi": compound_dat.at[0, "doi"]
+    })
+
+    return jsonify(compound_list), 200
+
 @app.route('/get_compound_properties/<cwid>')
 def show_compounds_properties_as_json(cwid):
     # Setting up the url for sparql endpoint.
