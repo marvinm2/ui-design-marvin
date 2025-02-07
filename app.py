@@ -274,10 +274,11 @@ WHERE {
     compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery, endpoint=compoundwikiEP, as_dataframe=True)
 
     compound_list = []
-    compound_list.append({
-      "propertyLabel": compound_dat.at[0, "propertyLabel"],
-      "value": compound_dat.at[0, "value"]
-    })
+    for _, row in compound_dat.iterrows():
+      compound_list.append({
+        "propertyLabel": row["propertyLabel"],
+        "value": str(row["value"])
+      })
 
     return jsonify(compound_list), 200
 
@@ -327,13 +328,14 @@ WHERE {
     compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery, endpoint=compoundwikiEP, as_dataframe=True)
 
     compound_list = []
-    compound_list.append({
-      "propEntityLabel": compound_dat.at[0, "propEntityLabel"],
-      "value": compound_dat.at[0, "value"],
-      "unitsLabel": compound_dat.at[0, "unitsLabel"],
-      "source": compound_dat.at[0, "source"],
-      "doi": compound_dat.at[0, "doi"]
-    })
+    for _, row in compound_dat.iterrows():
+      compound_list.append({
+        "propEntityLabel": row["propEntityLabel"],
+        "value": row["value"],
+        "unitsLabel": row["unitsLabel"],
+        "source": row["source"],
+        "doi": row["doi"]
+      })
 
     return jsonify(compound_list), 200
 
