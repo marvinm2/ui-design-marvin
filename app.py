@@ -244,7 +244,7 @@ def get_compounds_q(q):
     # Organizing the output into a list of dictionaries
     compound_list = []
     for _, row in compound_dat.iterrows():
-        compound_list.append({"Term": row[2], "SMILES": row[0]})
+        compound_list.append({"ID": row[1], "Term": row[2], "SMILES": row[0]})
 
     return jsonify(compound_list), 200
 
