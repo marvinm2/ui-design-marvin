@@ -5,6 +5,21 @@
  
 <h1 id="title">{{ cwid }}</h1>
 
+<h2>Basic info</h2>
+
+        <table class="table table-bordered table-striped" id="info_table"> 
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+
+<h2>3D structure</h2>
+
 <script>
   var jmolApplet0; // set up in HTML table, below
   jmol_isReady = function(applet) {
@@ -16,7 +31,6 @@
 	width: 450,
 	height: 450,
 	debug: false,
-	color: "white",
 	readyFunction: jmol_isReady,
   }
   jmolApplet0 = Jmol.getApplet("jmolApplet0", Info)
@@ -25,13 +39,33 @@
       // Fetch and populate the compound table
       $.getJSON("/get_compound_properties/{{ cwid }}", function (data) {
         console.log(data[0])
+        // replace the Compound Wiki ID with the label
         document.getElementById("title").innerHTML = data[0].label
+
+        // add a JmolJS applet
         $("#mydiv").html(Jmol.getAppletHtml("jmolApplet0"))
         Jmol.script(jmolApplet0, 'load smiles \"' + data[0].SMILES + "\"")
       });
+      
+      $.getJSON("/get_compound_identifiers/{{ cwid }}", function (data) {
+        console.log(data)
+        const tableBody = $("#info_table tbody");
+        tableBody.empty();
+        data.forEach((option) => {
+            tableBody.append(`
+                <tr>
+                    <td>${option.propertyLabel}</td>
+                    <td>${option.value}</td>
+                </tr>
+            `);
+        });
+    });
+
+      
   })
+  
 </script>
 
-<span id=mydiv></span>
+<span id="mydiv"></span>
 
 {% endblock %}

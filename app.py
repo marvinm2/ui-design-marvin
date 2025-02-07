@@ -252,6 +252,35 @@ def get_compounds_q(q):
 def get_compounds_VHP():
     return get_compounds_q("Q2059")
 
+@app.route('/get_compound_identifiers/<cwid>')
+def show_compounds_identifiers_as_json(cwid):
+    # Setting up the url for sparql endpoint.
+    compoundwikiEP = "https://compoundcloud.wikibase.cloud/query/sparql"
+
+    sparqlquery = '''
+      PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
+      PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
+      
+SELECT ?propertyLabel ?value
+WHERE {
+  VALUES ?property { wd:P3 wd:P2 wd:P32 }
+  ?property wikibase:directClaim ?valueProp .
+  OPTIONAL { wd:''' + cwid + ''' ?valueProp ?value }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+      '''
+    print(sparqlquery + "\n")
+
+    compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery, endpoint=compoundwikiEP, as_dataframe=True)
+
+    compound_list = []
+    compound_list.append({
+      "propertyLabel": compound_dat.at[0, "propertyLabel"],
+      "value": compound_dat.at[0, "value"]
+    })
+
+    return jsonify(compound_list), 200
+
 @app.route('/get_compound_properties/<cwid>')
 def show_compounds_properties_as_json(cwid):
     # Setting up the url for sparql endpoint.
