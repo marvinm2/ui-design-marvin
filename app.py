@@ -475,7 +475,7 @@ def fetch_sparql_data():
         ao = result["ao"]["value"] if "ao" in result else None  # Adverse Outcome (AO)
         ker_uri = result["KER"]["value"]  # Extract KER URI
         ker_id = extract_ker_id(ker_uri)  # Extract only the numeric part
-
+        
         # Add or update the KE Upstream node
         if ke_upstream not in node_dict:
             node_dict[ke_upstream] = {
@@ -483,9 +483,11 @@ def fetch_sparql_data():
                     "id": ke_upstream,
                     "label": ke_upstream_title,
                     "KEupTitle": ke_upstream_title,
-                    "is_mie": ke_upstream == mie  # Only set True if it matches MIE
+                    "is_mie": ke_upstream == mie  # Only set True if it matches MIE,
                 }
             }
+            if ke_upstream == mie:
+                node_dict[ke_upstream]["data"]["in_brain"] = True
         else:
             if ke_upstream == mie:
                 node_dict[ke_upstream]["data"]["is_mie"] = True
