@@ -357,6 +357,10 @@ WHERE {
 }
 """
 
+def extract_ker_id(ker_uri):
+    """Extract only the numeric ID from the KER URI (after the last '/')"""
+    return ker_uri.split("/")[-1] if ker_uri else "Unknown"
+
 def fetch_sparql_data():
     """Fetch data from the SPARQL endpoint and format it for Cytoscape.js."""
     response = requests.get(AOPWIKISPARQL_ENDPOINT, params={"query": AOPWIKIPARKINSONSPARQL_QUERY, "format": "json"})
@@ -365,6 +369,7 @@ def fetch_sparql_data():
 
     data = response.json()
     cytoscape_elements = []
+    node_dict = {}  # Store nodes to avoid duplicates and overwriting MIE/AO attributes
 
     for result in data["results"]["bindings"]:
         # Extract key event data
@@ -372,23 +377,52 @@ def fetch_sparql_data():
         ke_upstream_title = result["KE_upstream_title"]["value"]
         ke_downstream = result["KE_downstream"]["value"]
         ke_downstream_title = result["KE_downstream_title"]["value"]
+        mie = result["MIE"]["value"]  # Molecular Initiating Event (MIE)
+        ao = result["ao"]["value"] if "ao" in result else None  # Adverse Outcome (AO)
+        ker_uri = result["KER"]["value"]  # Extract KER URI
+        ker_id = extract_ker_id(ker_uri)  # Extract only the numeric part
 
-        # Add nodes (if not already added)
-        if not any(n["data"]["id"] == ke_upstream for n in cytoscape_elements):
-            cytoscape_elements.append({"data": {"id": ke_upstream, "label": ke_upstream_title}})
-        if not any(n["data"]["id"] == ke_downstream for n in cytoscape_elements):
-            cytoscape_elements.append({"data": {"id": ke_downstream, "label": ke_downstream_title}})
+        # Add or update the KE Upstream node
+        if ke_upstream not in node_dict:
+            node_dict[ke_upstream] = {
+                "data": {
+                    "id": ke_upstream,
+                    "label": ke_upstream_title,
+                    "KEupTitle": ke_upstream_title,
+                    "is_mie": ke_upstream == mie  # Only set True if it matches MIE
+                }
+            }
+        else:
+            if ke_upstream == mie:
+                node_dict[ke_upstream]["data"]["is_mie"] = True
 
-        # Add edge
+        # Add or update the KE Downstream node
+        if ke_downstream not in node_dict:
+            node_dict[ke_downstream] = {
+                "data": {
+                    "id": ke_downstream,
+                    "label": ke_downstream_title,
+                    "is_ao": ke_downstream == ao  # Only set True if it matches AO
+                }
+            }
+        else:
+            if ke_downstream == ao:
+                node_dict[ke_downstream]["data"]["is_ao"] = True
+
+        # Add edge with extracted KER ID
+        edge_id = f"{ke_upstream}_{ke_downstream}"
         cytoscape_elements.append({
             "data": {
-                "id": f"{ke_upstream}_{ke_downstream}",
+                "id": edge_id,
                 "source": ke_upstream,
-                "target": ke_downstream
+                "target": ke_downstream,
+                "ker_label": ker_id  # Store KER ID for Cytoscape.js labeling
             }
         })
 
-    return cytoscape_elements
+    # Convert node_dict values to a list and merge with edges
+    return list(node_dict.values()) + cytoscape_elements
+
 
 @app.route("/get_aop_network")
 def get_aop_network():
