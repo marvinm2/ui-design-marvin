@@ -99,10 +99,11 @@ data = [
         const tableBody = $("#compound_table tbody");
         tableBody.empty();
         data.forEach((option) => {
+          encodedSMILES = encodeURI(option.SMILES)
           tableBody.append(`
             <tr>
                 <td>${option.Term}</td>
-                <td>${option.SMILES}</td>
+                <td><img src="https://cdkdepict.cloud.vhp4safety.nl/depict/bot/svg?w=-1&h=-1&abbr=off&hdisp=bridgehead&showtitle=false&zoom=1.6&annotate=cip&r=0&smi=${encodedSMILES}" /></td>
             </tr>
           `);
         });
