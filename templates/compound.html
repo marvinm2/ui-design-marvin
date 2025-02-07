@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+ 
+<h1 id="title">{{ cwid }}</h1>
+
+<script>
+  $(document).ready(function () {
+      // Fetch and populate the compound table
+      $.getJSON("/get_compound_properties/{{ cwid }}", function (data) {
+        console.log(data[0].label)
+        document.getElementById("title").innerHTML = data[0].label
+      });
+  })
+</script>
+
+{% endblock %}

@@ -175,6 +175,13 @@ def show(workflow):
     except TemplateNotFound:
         abort(404)
 
+@app.route('/compound/<cwid>')
+def show_compound(cwid):
+    try:
+        return render_template(f'compound.html', cwid=cwid)
+    except TemplateNotFound:
+        abort(404)
+
 @app.route('/templates/case_studies/thyroid/thyroid')
 def thyroid_main():
     return render_template('case_studies/thyroid/thyroid.html')
@@ -244,6 +251,31 @@ def get_compounds_q(q):
 @app.route('/get_compounds', methods=['GET'])
 def get_compounds_VHP():
     return get_compounds_q("Q2059")
+
+@app.route('/get_compound_properties/<cwid>')
+def show_compounds_properties_as_json(cwid):
+    # Setting up the url for sparql endpoint.
+    compoundwikiEP = "https://compoundcloud.wikibase.cloud/query/sparql"
+
+    sparqlquery = '''
+      PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
+      PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
+      
+      SELECT ?cmp ?cmpLabel ?inchiKey WHERE {
+        VALUES ?cmp { wd:''' + cwid + ''' }
+        ?cmp wdt:P10 ?inchiKey .
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+      }
+      '''
+    print(sparqlquery + "\n")
+
+    compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery, endpoint=compoundwikiEP, as_dataframe=True)
+
+    compound_list = []
+    for _, row in compound_dat.iterrows():
+        compound_list.append({"wcid": row[0], "label": row[1], "inchikey": row[2]})
+
+    return jsonify(compound_list), 200
 
 @app.route('/get_compounds_parkinson', methods=['GET'])
 def get_compounds_VHP_CS2():
