@@ -157,7 +157,7 @@ $(document).ready(function () {
             
             compoundMapping[option.SMILES] = option.Term;
             tableBody.append(`
-                <tr>
+                 <tr>
                     <td><a href="/compound/${option.ID}">${option.Term}</a></td>
                     <td><img src="https://cdkdepict.cloud.vhp4safety.nl/depict/bot/svg?w=-1&h=-1&abbr=off&hdisp=bridgehead&showtitle=false&zoom=1&annotate=cip&r=0&smi=${encodedSMILES}" 
                          alt="${option.SMILES}" /></td>
@@ -256,7 +256,7 @@ $(document).ready(function () {
             }
         });
     });
-
+});
 </script>
 
 {% endblock %}
