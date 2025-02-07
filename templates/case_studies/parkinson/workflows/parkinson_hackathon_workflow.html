@@ -4,4 +4,54 @@
 <h1>Parkinson Case Demo Workflow (Hackathon PS3)</h1>
 <br />
 
+<div id="cy" style="width: 80vh; height: 80vh"></div>
+
+<script>
+window.addEventListener('DOMContentLoaded', function(){
+
+data = [
+  {
+    "data": { "id": "SCN3B" }
+  },
+  {
+    "data": { "id": "EDN2" }
+  },
+  {
+    "data": { "id": "edge1", "source": "SCN3B", "target": "EDN2" }
+  }
+]
+
+				var cy = window.cy = cytoscape({
+					container: document.getElementById('cy'),
+
+					layout: {
+					  name: 'grid',
+					  minDist: 40
+					},
+
+					style: [
+						{
+							selector: 'node',
+							style: {
+								'background-color': '#ea8a31'
+							}
+						},
+
+						{
+							selector: 'edge',
+							style: {
+								'curve-style': 'haystack',
+								'haystack-radius': 0,
+								'width': 3,
+								'opacity': 0.666,
+								'line-color': '#fcc694'
+							}
+						}
+					],
+          elements: data
+				});
+			});
+		</script>
+</script>
+
 {% endblock %}
