@@ -146,6 +146,10 @@ def kidney_main():
 def parkinson_main():
     return render_template('case_studies/parkinson/parkinson.html')
 
+@app.route('/templates/case_studies/parkinson/workflows/parkinson_hackathon_workflow')
+def parkinson_hackathon_workflow():
+    return render_template('case_studies/parkinson/workflows/parkinson_hackathon_workflow.html')
+
 @app.route('/templates/case_studies/thyroid/thyroid')
 def thyroid_main():
     return render_template('case_studies/thyroid/thyroid.html')
