@@ -2,18 +2,36 @@
 {% block content %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
  
 <h1 id="title">{{ cwid }}</h1>
 
 <script>
+  var jmolApplet0; // set up in HTML table, below
+  jmol_isReady = function(applet) {
+    Jmol._getElement(applet, "appletdiv").style.border="1px solid blue"
+  }
+
+   var Info = {
+    j2sPath: "/static/js/j2s",
+	width: 450,
+	height: 450,
+	debug: false,
+	color: "white",
+	readyFunction: jmol_isReady,
+  }
+  jmolApplet0 = Jmol.getApplet("jmolApplet0", Info)
+
   $(document).ready(function () {
       // Fetch and populate the compound table
       $.getJSON("/get_compound_properties/{{ cwid }}", function (data) {
-        console.log(data[0].label)
+        console.log(data[0])
         document.getElementById("title").innerHTML = data[0].label
+        $("#mydiv").html(Jmol.getAppletHtml("jmolApplet0"))
+        Jmol.script(jmolApplet0, 'show chemical ' + data[0].SMILES)
       });
   })
 </script>
+
+<span id=mydiv></span>
 
 {% endblock %}

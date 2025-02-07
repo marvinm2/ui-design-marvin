@@ -261,9 +261,12 @@ def show_compounds_properties_as_json(cwid):
       PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
       PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
       
-      SELECT ?cmp ?cmpLabel ?inchiKey WHERE {
+      SELECT ?cmp ?cmpLabel ?inchiKey ?SMILESWHERE {
         VALUES ?cmp { wd:''' + cwid + ''' }
         ?cmp wdt:P10 ?inchiKey .
+        OPTIONAL { ?cmp wdt:P7 ?chiralSMILES }
+        OPTIONAL { ?cmp wdt:P12 ?nonchiralSMILES }
+        BIND (COALESCE(IF(BOUND(?chiralSMILES), ?chiralSMILES, 1/0), IF(BOUND(?nonchiralSMILES), ?nonchiralSMILES, 1/0),"") AS ?SMILES)
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
       }
       '''
@@ -273,7 +276,7 @@ def show_compounds_properties_as_json(cwid):
 
     compound_list = []
     for _, row in compound_dat.iterrows():
-        compound_list.append({"wcid": row[0], "label": row[1], "inchikey": row[2]})
+        compound_list.append({"wcid": row[0], "label": row[1], "inchikey": row[2], "SMILES": row[3]})
 
     return jsonify(compound_list), 200
 
