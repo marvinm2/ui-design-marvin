@@ -1,12 +1,13 @@
 
 ################################################################################
 ### Loading the required modules
-from flask import Flask, request, jsonify, render_template, send_file
+from flask import Flask, request, jsonify, render_template, send_file, Blueprint, render_template, abort
 import requests
 from wikidataintegrator import wdi_core
 import json
 import re
 from werkzeug.routing import BaseConverter
+from jinja2 import TemplateNotFound
 ################################################################################
 
 class RegexConverter(BaseConverter):
@@ -166,6 +167,13 @@ def parkinson_main():
 @app.route('/templates/case_studies/parkinson/workflows/parkinson_hackathon_workflow')
 def parkinson_hackathon_workflow():
     return render_template('case_studies/parkinson/workflows/parkinson_hackathon_workflow.html')
+
+@app.route('/workflow/<workflow>')
+def show(workflow):
+    try:
+        return render_template(f'case_studies/parkinson/workflows/{workflow}_workflow.html')
+    except TemplateNotFound:
+        abort(404)
 
 @app.route('/templates/case_studies/thyroid/thyroid')
 def thyroid_main():
