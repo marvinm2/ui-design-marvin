@@ -261,7 +261,7 @@ def show_compounds_properties_as_json(cwid):
       PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
       PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
       
-      SELECT ?cmp ?cmpLabel ?inchiKey ?SMILESWHERE {
+      SELECT ?cmp ?cmpLabel ?inchiKey ?SMILES WHERE {
         VALUES ?cmp { wd:''' + cwid + ''' }
         ?cmp wdt:P10 ?inchiKey .
         OPTIONAL { ?cmp wdt:P7 ?chiralSMILES }
@@ -275,8 +275,12 @@ def show_compounds_properties_as_json(cwid):
     compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery, endpoint=compoundwikiEP, as_dataframe=True)
 
     compound_list = []
-    for _, row in compound_dat.iterrows():
-        compound_list.append({"wcid": row[0], "label": row[1], "inchikey": row[2], "SMILES": row[3]})
+    compound_list.append({
+      "wcid": compound_dat.at[0, "cmp"],
+      "label": compound_dat.at[0, "cmpLabel"],
+      "inchikey": compound_dat.at[0, "inchiKey"],
+      "SMILES": compound_dat.at[0, "SMILES"]
+    })
 
     return jsonify(compound_list), 200
 
