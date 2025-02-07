@@ -27,7 +27,7 @@
         console.log(data[0])
         document.getElementById("title").innerHTML = data[0].label
         $("#mydiv").html(Jmol.getAppletHtml("jmolApplet0"))
-        Jmol.script(jmolApplet0, 'show chemical ' + data[0].SMILES)
+        Jmol.script(jmolApplet0, 'load smiles \"' + data[0].SMILES + "\"")
       });
   })
 </script>
