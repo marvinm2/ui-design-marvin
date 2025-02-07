@@ -6,8 +6,23 @@ import requests
 from wikidataintegrator import wdi_core
 import json
 import re
+from werkzeug.routing import BaseConverter
 ################################################################################
 
+class RegexConverter(BaseConverter):
+    """Converter for regular expression routes.
+
+    References
+    ----------
+    Scholia views.py
+    https://stackoverflow.com/questions/5870188
+
+    """
+
+    def __init__(self, url_map, *items):
+        """Set up regular expression matcher."""
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = items[0]
 
 app = Flask(__name__)
 
@@ -186,20 +201,19 @@ def get_dummy_data():
     ]
     return results, 200
 
-@app.route('/get_compounds', methods=['GET'])
-def get_compounds():
+def get_compounds_q(q):
     # Setting up the url for sparql endpoint.
     compoundwikiEP = "https://compoundcloud.wikibase.cloud/query/sparql"
 
     # Setting up the sparql query for the full list of compounds.
-    sparqlquery_full = '''
+    sparqlquery_full = """
     PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
     PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
 
     SELECT DISTINCT (substr(str(?cmp), 45) as ?ID) (?cmpLabel AS ?Term)
         ?SMILES (?cmp AS ?ref)
     WHERE{
-        { ?parent wdt:P21 wd:Q2059 ; wdt:P29 ?cmp . } UNION { ?cmp wdt:P21 wd:Q2059 . }
+        { ?parent wdt:P21 wd:""" + q +""" ; wdt:P29 ?cmp . } UNION { ?cmp wdt:P21 wd:""" + q +""" . }
     ?cmp wdt:P1 ?type ; rdfs:label ?cmpLabel . FILTER(lang(?cmpLabel) = 'en')
     ?type rdfs:label ?typeLabel . FILTER(lang(?typeLabel) = 'en')
     OPTIONAL { ?cmp wdt:P7 ?chiralSMILES }
@@ -207,7 +221,7 @@ def get_compounds():
     BIND (COALESCE(IF(BOUND(?chiralSMILES), ?chiralSMILES, 1/0), IF(BOUND(?nonchiralSMILES), ?nonchiralSMILES, 1/0),"") AS ?SMILES)
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
     }
-    '''
+    """
 
      # Making the SPARQL query
     compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery_full, endpoint=compoundwikiEP, as_dataframe=True)
@@ -218,40 +232,14 @@ def get_compounds():
         compound_list.append({"Term": row[2], "SMILES": row[0]})
 
     return jsonify(compound_list), 200
+
+@app.route('/get_compounds', methods=['GET'])
+def get_compounds_VHP():
+    return get_compounds_q("Q2059")
 
 @app.route('/get_compounds_parkinson', methods=['GET'])
-def get_compounds_parkinson():
-    # Setting up the url for sparql endpoint.
-    compoundwikiEP = "https://compoundcloud.wikibase.cloud/query/sparql"
-
-    # Setting up the sparql query for the full list of compounds.
-    sparqlquery_full = '''
-    PREFIX wd: <https://compoundcloud.wikibase.cloud/entity/>
-    PREFIX wdt: <https://compoundcloud.wikibase.cloud/prop/direct/>
-
-    SELECT DISTINCT (substr(str(?cmp), 45) as ?ID) (?cmpLabel AS ?Term)
-        ?SMILES (?cmp AS ?ref)
-    WHERE{
-        { ?parent wdt:P21 wd:Q5050 ; wdt:P29 ?cmp . } UNION { ?cmp wdt:P21 wd:Q5050 . }
-    ?cmp wdt:P1 ?type ; rdfs:label ?cmpLabel . FILTER(lang(?cmpLabel) = 'en')
-    ?type rdfs:label ?typeLabel . FILTER(lang(?typeLabel) = 'en')
-    OPTIONAL { ?cmp wdt:P7 ?chiralSMILES }
-    OPTIONAL { ?cmp wdt:P12 ?nonchiralSMILES }
-    BIND (COALESCE(IF(BOUND(?chiralSMILES), ?chiralSMILES, 1/0), IF(BOUND(?nonchiralSMILES), ?nonchiralSMILES, 1/0),"") AS ?SMILES)
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-    }
-    '''
-
-     # Making the SPARQL query
-    compound_dat = wdi_core.WDFunctionsEngine.execute_sparql_query(sparqlquery_full, endpoint=compoundwikiEP, as_dataframe=True)
-
-    # Organizing the output into a list of dictionaries
-    compound_list = []
-    for _, row in compound_dat.iterrows():
-        compound_list.append({"Term": row[2], "SMILES": row[0]})
-
-    return jsonify(compound_list), 200
-
+def get_compounds_VHP_CS2():
+    return get_compounds_q("Q5050")
 
 def fetch_predictions(smiles, models, metadata, threshold=6.5):
     url = "https://qsprpred.cloud.vhp4safety.nl/api"
