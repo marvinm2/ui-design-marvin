@@ -329,6 +329,73 @@ def get_predictions():
     return jsonify(results)
 
 
+AOPWIKISPARQL_ENDPOINT = "https://aopwiki.rdf.bigcat-bioinformatics.org/sparql/"
+
+AOPWIKIPARKINSONSPARQL_QUERY = """
+SELECT DISTINCT ?aop ?aop_title ?MIEtitle ?MIE ?KE_downstream ?KE_downstream_title  
+       ?KER ?ao ?AOtitle ?KE_upstream ?KE_upstream_title
+WHERE {
+  VALUES ?MIE { aop.events:388 aop.events:2039 aop.events:2036  }
+    ?aop a aopo:AdverseOutcomePathway ;
+         dc:title ?aop_title ;
+         aopo:has_adverse_outcome ?ao ;
+         aopo:has_molecular_initiating_event ?MIE .
+    
+    ?MIE dc:title ?MIEtitle .
+
+      ?aop aopo:has_key_event_relationship ?KER .
+      ?KER a aopo:KeyEventRelationship ;
+           aopo:has_upstream_key_event ?KE_upstream ;
+           aopo:has_downstream_key_event ?KE_downstream .
+      
+      ?KE_upstream dc:title ?KE_upstream_title .
+      ?KE_downstream dc:title ?KE_downstream_title .
+    
+    OPTIONAL {
+      ?ao rdfs:label ?AOtitle .
+    }
+}
+"""
+
+def fetch_sparql_data():
+    """Fetch data from the SPARQL endpoint and format it for Cytoscape.js."""
+    response = requests.get(AOPWIKISPARQL_ENDPOINT, params={"query": AOPWIKIPARKINSONSPARQL_QUERY, "format": "json"})
+    if response.status_code != 200:
+        return {"error": "Failed to fetch SPARQL data"}
+
+    data = response.json()
+    cytoscape_elements = []
+
+    for result in data["results"]["bindings"]:
+        # Extract key event data
+        ke_upstream = result["KE_upstream"]["value"]
+        ke_upstream_title = result["KE_upstream_title"]["value"]
+        ke_downstream = result["KE_downstream"]["value"]
+        ke_downstream_title = result["KE_downstream_title"]["value"]
+
+        # Add nodes (if not already added)
+        if not any(n["data"]["id"] == ke_upstream for n in cytoscape_elements):
+            cytoscape_elements.append({"data": {"id": ke_upstream, "label": ke_upstream_title}})
+        if not any(n["data"]["id"] == ke_downstream for n in cytoscape_elements):
+            cytoscape_elements.append({"data": {"id": ke_downstream, "label": ke_downstream_title}})
+
+        # Add edge
+        cytoscape_elements.append({
+            "data": {
+                "id": f"{ke_upstream}_{ke_downstream}",
+                "source": ke_upstream,
+                "target": ke_downstream
+            }
+        })
+
+    return cytoscape_elements
+
+@app.route("/get_aop_network")
+def get_aop_network():
+    """API route to return the AOP network."""
+    data = fetch_sparql_data()
+    return jsonify(data)
+
 ################################################################################
 
 if __name__ == '__main__':
