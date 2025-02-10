@@ -294,7 +294,7 @@ PREFIX wid: <http://www.wikidata.org/entity/>
 PREFIX widt: <http://www.wikidata.org/prop/direct/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 
-SELECT ?propEntityLabel ?value ?unitsLabel ?source ?doi
+SELECT ?propEntityLabel ?value ?unitsLabel ?sourceLabel ?doi
 WHERE {
   wd:P5 wikibase:directClaim ?identifierProp .
   wd:''' + cwid + ''' ?identifierProp ?wikidata .
@@ -308,6 +308,7 @@ WHERE {
       ] .
     OPTIONAL {
       ?statement prov:wasDerivedFrom/pr:P248 ?source .
+      ?source rdfs:label ?sourceLabel . FILTER (lang(?sourceLabel) = 'en')
       OPTIONAL { ?source wdt:P356 ?doi . }
     }
     ?property wikibase:claim ?propp ;
@@ -333,7 +334,7 @@ WHERE {
         "propEntityLabel": row["propEntityLabel"],
         "value": row["value"],
         "unitsLabel": row["unitsLabel"],
-        "source": row["source"],
+        "source": row["sourceLabel"],
         "doi": row["doi"]
       })
 
